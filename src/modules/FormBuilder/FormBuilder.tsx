@@ -4,7 +4,7 @@ import { FormBuilderComponent } from "../../types/formbuider_types";
 import Button from "../../common/_custom/Button/Button";
 import { SAVE_STATES, useFormBuilder } from "./formBuilder_hooks";
 import FormBuilderBody from "./components/FormBuilderBody/FormBuilderBody";
-import chevronDown from "../../assets/chevron-down.svg";
+import CollapsedFormBody from "./components/CollapsedFormBody/CollapsedFormBody";
 
 function FormBuilder() {
   const {
@@ -39,20 +39,15 @@ function FormBuilder() {
           (formBuilderComponent: FormBuilderComponent, i: number) => (
             <div className={styles.FormBody} key={i}>
               {expandIndex !== i ? (
-                <div className={styles.QuestionTitleRow}>
-                  <div>{formBuilderComponent.title}</div>
-                  <img
-                    src={chevronDown}
-                    className={styles.DownIcon}
-                    alt="down"
-                    height={"20px"}
-                    onClick={() => {
-                      if (!errorsExist) setExpandIndex(i);
-                    }}
-                  />
-                </div>
+                <CollapsedFormBody
+                  key={i}
+                  index={i}
+                  setExpandIndex={setExpandIndex}
+                  formBuilderComponent={formBuilderComponent}
+                />
               ) : (
                 <FormBuilderBody
+                  key={i}
                   index={i}
                   formBuilderComponent={formBuilderComponent}
                   changeFormValue={changeFormValue}

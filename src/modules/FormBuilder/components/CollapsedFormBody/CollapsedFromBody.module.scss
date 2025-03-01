@@ -1,0 +1,16 @@
+.CollapsedFormBody {
+  .QuestionTitleRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    .Right {
+      display: flex;
+      align-items: center;
+
+      .Status {
+        padding: 0 20px;
+      }
+    }
+  }
+}
