@@ -9,6 +9,7 @@ import Button from "../../common/_custom/Button/Button";
 import Checkbox from "../../common/_custom/Checkbox/Checkbox";
 import Dropdown from "../../common/_custom/Dropdown/Dropdown";
 import chevronDown from "../../assets/chevron-down.svg";
+import greenTick from "../../assets/green-tick.svg";
 import clsx from "clsx";
 
 function FormBuilder() {
@@ -67,7 +68,9 @@ function FormBuilder() {
                       <div>{formBuilderComponent.title}</div>
                     )}
                     <div className={styles.Right}>
-                      <div className={styles.Status}>Status</div>
+                      <div className={styles.Status}>
+                        <img src={greenTick} alt="status" height={"20px"} />
+                      </div>
                       <img
                         src={chevronDown}
                         className={clsx(styles.DownIcon, {
