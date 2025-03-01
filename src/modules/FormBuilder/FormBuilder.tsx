@@ -8,6 +8,8 @@ import {
 import Button from "../../common/_custom/Button/Button";
 import Checkbox from "../../common/_custom/Checkbox/Checkbox";
 import Dropdown from "../../common/_custom/Dropdown/Dropdown";
+import chevronDown from "../../assets/chevron-down.svg";
+import clsx from "clsx";
 
 function FormBuilder() {
   const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>([]);
@@ -15,6 +17,7 @@ function FormBuilder() {
   //   const [newFormComponentData, setNewFormComponentData] =
   //     useState<FormBuilderComponent | null>(null);
 
+  const ifAllOk = true;
   const initialiseNewQuestion = () => {
     const newQuestionData: FormBuilderComponent = {
       title: "",
@@ -50,51 +53,83 @@ function FormBuilder() {
             <div className={styles.FormBody} key={i}>
               {expandIndex !== null && formBuilderData?.[expandIndex] ? (
                 <>
-                  <div className={styles.QuestionTitleRow}>
-                    <Input
-                      placeholder="Question Title"
-                      value={formBuilderComponent.title}
-                      onChange={(value) => changeFormValue("title", value)}
-                    />
-                    <div>ok</div>
-                  </div>
-                  <div className={styles.QuestionTypeRow}>
-                    <Input
-                      placeholder="Question Type"
-                      value={formBuilderComponent.type}
-                      onChange={(value) => changeFormValue("type", value)}
-                    />
-                    <div className={styles.Checks}>
-                      <Checkbox
-                        label="Required"
-                        checked={formBuilderComponent.isRequired}
-                        onChange={(checked) =>
-                          changeFormValue("isRequired", checked)
-                        }
+                  <div
+                    className={styles.QuestionTitleRow}
+                    onClick={() => setExpandIndex(i)}
+                  >
+                    {expandIndex === i ? (
+                      <Input
+                        placeholder="Question Title"
+                        value={formBuilderComponent.title}
+                        onChange={(value) => changeFormValue("title", value)}
                       />
-                      <Checkbox
-                        label="Hidden"
-                        checked={formBuilderComponent.isHidden}
-                        onChange={(checked) =>
-                          changeFormValue("isHidden", checked)
-                        }
+                    ) : (
+                      <div>{formBuilderComponent.title}</div>
+                    )}
+                    <div className={styles.Right}>
+                      <div className={styles.Status}>Status</div>
+                      <img
+                        src={chevronDown}
+                        className={clsx(styles.DownIcon, {
+                          [styles.Rotate]: i === expandIndex,
+                        })}
+                        alt="down"
+                        height={"20px"}
                       />
                     </div>
                   </div>
-                  <Input
-                    placeholder="Helper Text"
-                    value={formBuilderComponent.helperText}
-                    onChange={(value) => changeFormValue("helperText", value)}
-                  />
-                  <Dropdown
-                    options={["hi", "bye"]}
-                    placeholder="hiiii"
-                    value={formBuilderComponent.type}
-                    onChange={(value) => changeFormValue("type", value)}
-                  />
+
+                  {i === expandIndex && (
+                    <>
+                      <div className={styles.QuestionTypeRow}>
+                        <Dropdown
+                          options={["text", "number"]}
+                          placeholder="hiiii"
+                          value={formBuilderComponent.type}
+                          onChange={(value) => changeFormValue("type", value)}
+                        />
+                        <div className={styles.Checks}>
+                          <Checkbox
+                            label="Required"
+                            checked={formBuilderComponent.isRequired}
+                            onChange={(checked) =>
+                              changeFormValue("isRequired", checked)
+                            }
+                          />
+                          <Checkbox
+                            label="Hidden"
+                            checked={formBuilderComponent.isHidden}
+                            onChange={(checked) =>
+                              changeFormValue("isHidden", checked)
+                            }
+                          />
+                        </div>
+                      </div>
+                      <Input
+                        placeholder="Helper Text"
+                        value={formBuilderComponent.helperText}
+                        onChange={(value) =>
+                          changeFormValue("helperText", value)
+                        }
+                      />
+                    </>
+                  )}
                 </>
               ) : (
-                <div>Collapse</div>
+                <div
+                  className={styles.FormBodyCollapsed}
+                  onClick={() => {
+                    setExpandIndex(i);
+                  }}
+                >
+                  {formBuilderComponent.title}
+                  <img
+                    src={chevronDown}
+                    className={styles.DownIcon}
+                    alt="down"
+                    height={"20px"}
+                  />
+                </div>
               )}
             </div>
           )
@@ -128,9 +163,11 @@ function FormBuilder() {
           <Input placeholder="Helper Text" />
         </div>
       )} */}
-      <div>
-        <Button text="Add Question" onClick={initialiseNewQuestion} />
-      </div>
+      {ifAllOk && (
+        <div>
+          <Button text="Add Question" onClick={initialiseNewQuestion} />
+        </div>
+      )}
     </div>
   );
 }

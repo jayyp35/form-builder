@@ -6,12 +6,18 @@
     background-color: white;
     border-radius: 4px;
     padding: 16px;
+    margin-bottom: 16px;
     // padding-top: 0;
 
     .QuestionTitleRow {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      .Right {
+        display: flex;
+        align-items: center;
+      }
     }
 
     .QuestionTypeRow {
@@ -26,6 +32,17 @@
         justify-content: flex-start;
         column-gap: 20px;
       }
+    }
+  }
+
+  .FormBodyCollapsed {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .DownIcon {
+      cursor: pointer;
     }
   }
 }
