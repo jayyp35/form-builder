@@ -1,5 +1,6 @@
 export type FormBuilderData = {
   id?: string;
+  lastUpdated?: string;
   metadata: FormBuilderMetadata;
   components: FormBuilderComponent[];
 };

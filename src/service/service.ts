@@ -12,25 +12,30 @@ export function saveFormData(
       //   }
 
       const savedForms = JSON.parse(localStorage.getItem("savedForms") || "[]");
+      const currentDateTime = new Date().toISOString();
       let formDataWithId;
 
       if (newFormDataToSave.id) {
-        console.log("Form has ID: ", newFormDataToSave.id);
         let existingFormIndex = savedForms.findIndex(
           (form: FormBuilderData) => form.id === newFormDataToSave.id
         );
-        savedForms[existingFormIndex] = newFormDataToSave;
+        savedForms[existingFormIndex] = {
+          ...newFormDataToSave,
+          lastUpdated: currentDateTime,
+        };
         formDataWithId = newFormDataToSave;
       } else {
-        console.log("Form has no id, saving as new ");
         // Save with a new ID
         const formId = `form_${Date.now()}_${Math.random()
           .toString(36)
           .substring(2, 9)}`;
-        formDataWithId = { ...newFormDataToSave, id: formId };
+        formDataWithId = {
+          ...newFormDataToSave,
+          id: formId,
+          lastUpdated: currentDateTime,
+        };
         savedForms.push(formDataWithId);
       }
-      console.log("savedForms", savedForms);
 
       localStorage.setItem("savedForms", JSON.stringify(savedForms));
       resolve(formDataWithId.id as string);

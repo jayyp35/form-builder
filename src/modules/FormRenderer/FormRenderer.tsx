@@ -1,40 +1,13 @@
-import { useEffect, useState } from "react";
 import styles from "./FormRenderer.module.scss";
-import {
-  FormBuilderComponent,
-  FormBuilderData,
-} from "../../types/formbuider_types";
-import Input from "../../common/_custom/Input/Input";
+import { FormBuilderData } from "../../types/formbuider_types";
 import { useNavigate } from "react-router-dom";
-import { fetchAllSavedForms } from "../../service/service";
 import Loader from "../../common/_custom/Loader/Loader";
+import { formatDate } from "../../utils/date_utils";
+import { useFetchAllForms } from "./formRenderer_hooks";
 
 export default function FormRenderer() {
   const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [forms, setForms] = useState<FormBuilderData[]>([]);
-
-  //   useEffect(() => {
-  //     if (savedForms) setForms(savedForms);
-  //   }, []);
-
-  useEffect(() => {
-    fetchAllForms();
-  }, []);
-
-  const fetchAllForms = () => {
-    setIsLoading(true);
-    fetchAllSavedForms()
-      .then((forms) => {
-        // console.log("forms", forms);
-        setForms(forms);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      });
-  };
+  const { isLoading, forms } = useFetchAllForms();
 
   const LoadingComponent = () => (
     <div className={styles.Loading}>
@@ -67,7 +40,10 @@ export default function FormRenderer() {
                     {formBuildData?.components?.length} fields
                   </span>
                 </div>
-                <div className={styles.LastUpdated}>Last updated: </div>
+                <div className={styles.LastUpdated}>
+                  Last updated:{" "}
+                  {formatDate(formBuildData.lastUpdated as string)}
+                </div>
               </div>
             ))
           ) : (
@@ -75,19 +51,6 @@ export default function FormRenderer() {
           )}
         </div>
       )}
-
-      {/* {formData.length && (
-        <div className={styles.FormContainer}>
-          {formData?.map(
-            (formDataComponent: FormBuilderComponent, i: number) => (
-              <div className={styles.SingleFormField}>
-                <div>{formDataComponent.title}</div>
-                <div>{renderInputElement(formDataComponent, i)}</div>
-              </div>
-            )
-          )}
-        </div>
-      )} */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { FormBuilderComponent } from "../../types/formbuider_types";
+import { FormBuilderComponent } from "../types/formbuider_types";
 
 export const validateNewFormComponent = (
   formBuilderData: FormBuilderComponent
