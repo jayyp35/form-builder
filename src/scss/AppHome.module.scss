@@ -1,0 +1,10 @@
+.AppHome {
+  font-size: 18px;
+
+  .Buttons {
+    margin-top: var(--flex-gap);
+    display: flex;
+    align-items: center;
+    column-gap: var(--flex-gap);
+  }
+}

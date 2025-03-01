@@ -1,12 +1,14 @@
-import React from "react";
 import Button from "../common/_custom/Button/Button";
+import styles from "../scss/AppHome.module.scss";
 
 function AppHome() {
   return (
-    <div>
+    <div className={styles.AppHome}>
       React Form Builder
-      <Button text={"Create Form"} />
-      <Button text={"View Forms"} type="secondary" />
+      <div className={styles.Buttons}>
+        <Button text={"Create Form"} />
+        <Button text={"View Forms"} type="secondary" />
+      </div>
     </div>
   );
 }
