@@ -1,6 +1,7 @@
 .DropdownContainer {
   position: relative;
   width: 100%;
+  cursor: pointer;
 
   .Dropdown {
     height: 40px;
@@ -13,11 +14,7 @@
     font-size: 14px;
     color: #999;
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23757575' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpath d='M6 9l6-6 6 6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 16px 16px;
-
+    cursor: pointer;
     &:focus {
       outline: none;
       border-color: #5264ae;
@@ -51,4 +48,24 @@
     color: red;
     font-weight: 500;
   }
+
+  .Icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+select::-ms-expand {
+  display: none;
+}
+
+select option {
+  color: black;
+  background: white;
+  font-size: 14px;
+}
+
+select option:disabled {
+  color: #999;
 }

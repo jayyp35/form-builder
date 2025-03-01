@@ -1,4 +1,5 @@
 import styles from "./Dropdown.module.scss";
+import chevronDown from "../../../assets/chevron-down.svg";
 import clsx from "clsx";
 
 interface DropdownProps {
@@ -41,6 +42,13 @@ function Dropdown({
       {!!errorMessage && (
         <div className={styles.ErrorMessage}>{errorMessage}</div>
       )}
+
+      <img
+        className={styles.Icon}
+        src={chevronDown}
+        alt="down"
+        height={"20px"}
+      />
     </div>
   );
 }
