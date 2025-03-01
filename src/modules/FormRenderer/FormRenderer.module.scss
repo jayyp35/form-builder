@@ -1,4 +1,5 @@
 .FormRenderer {
+  color: white;
   .Title {
     color: white;
     padding-bottom: 10px;
@@ -7,6 +8,7 @@
   }
 
   .SavedFormsContainer {
+    color: black;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 20px;
@@ -34,6 +36,9 @@
       }
     }
   }
+  .SavedFormsContainer :global {
+    animation: fadeIn 400ms ease-in-out;
+  }
 
   .FormContainer {
     background-color: white;
@@ -50,4 +55,13 @@
 
 .FormRenderer :global {
   animation: fadeIn 400ms ease-in-out;
+}
+
+.Loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
 }

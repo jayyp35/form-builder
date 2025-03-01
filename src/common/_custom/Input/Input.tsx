@@ -24,11 +24,18 @@ function Input({
     <div className={styles.InputContainer}>
       <input
         className={clsx(styles.Input, { [styles.InputError]: !!errorMessage })}
-        type={type}
+        type={"text"}
+        pattern={type === "number" ? "[0-9]*" : ""}
         placeholder={placeholder}
         value={value}
         onChange={(e) => {
-          onChange?.(e.target.value);
+          // console.log("check", type === "number", e.target.validity.valid);
+
+          if (type === "number") {
+            if (e.target.validity.valid) onChange?.(e.target.value);
+          } else {
+            onChange?.(e.target.value);
+          }
         }}
         disabled={disabled}
       />

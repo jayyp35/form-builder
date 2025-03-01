@@ -39,9 +39,8 @@ function FormBuilder() {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const errorsExist = !!Object.keys(errors).length;
 
-  console.log("savingState", savingState);
-
   useEffect(() => {
+    console.log("timeout ref", !!timeoutRef.current);
     if (!formBuilderData.components.length) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
@@ -55,7 +54,8 @@ function FormBuilder() {
   }, [formBuilderData.components]);
 
   const saveData = () => {
-    console.log("saving");
+    // console.log("saving");
+    if (savingState === SAVE_STATES.SAVING) return;
     setErrors({});
     setSavingData(SAVE_STATES.SAVING);
     if (expandIndex !== null) {
@@ -63,8 +63,8 @@ function FormBuilder() {
         formBuilderData.components?.[expandIndex]
       );
 
-      console.log("isvaliud", isValid);
-      console.log("errorsobj", errorsObject);
+      // console.log("isvaliud", isValid);
+      // console.log("errorsobj", errorsObject);
       setErrors(errorsObject);
       if (!isValid) {
         setSavingData(SAVE_STATES.ERROR);

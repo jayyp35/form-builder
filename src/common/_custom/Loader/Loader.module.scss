@@ -11,6 +11,12 @@
   -webkit-mask-composite: source-out;
   mask-composite: subtract;
   animation: l3 1s infinite linear;
+
+  position: relative;
+}
+
+.LoaderText {
+  margin-top: 20px;
 }
 @keyframes l3 {
   to {

@@ -17,6 +17,7 @@ export interface FormBuilderComponent {
   additionalProperties?: AdditionalProperties;
 
   value?: string | number;
+  errorMessage?: string;
 }
 
 export type AdditionalProperties = {

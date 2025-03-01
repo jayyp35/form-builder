@@ -4,19 +4,46 @@
   min-height: 90vh;
   padding: 24px;
 
-  .Title {
-    text-align: center;
-    font-weight: 500;
-  }
+  .FormBodyContainer {
+    .Title {
+      text-align: center;
+      font-weight: 500;
+    }
 
-  .ComponentsContainer {
-    margin-top: 20px;
-
-    .SingleFormComponent {
-      .ComponentTitle {
-        font-size: 14px;
-        font-weight: 500;
+    .ComponentsContainer {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+      .SingleFormComponent {
+        .ComponentTitle {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        .FormComponent {
+          margin-top: 5px;
+        }
       }
     }
+
+    .Footer {
+      margin-top: 10px;
+    }
   }
+
+  .FormBodyContainer :global {
+    animation: fadeIn 400ms ease-in-out;
+  }
+}
+
+.SingleFormBody :global {
+  animation: fadeIn 400ms ease-in-out;
+}
+
+.Loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
 }

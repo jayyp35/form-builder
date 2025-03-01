@@ -13,16 +13,16 @@ export function saveFormData(
 
       const savedForms = JSON.parse(localStorage.getItem("savedForms") || "[]");
       let formDataWithId;
-      let existingFormIndex = savedForms.findIndex(
-        (form: FormBuilderData) => form.id === newFormDataToSave.id
-      );
 
-      if (newFormDataToSave.id && existingFormIndex !== -1) {
-        console.log("hi");
+      if (newFormDataToSave.id) {
+        console.log("Form has ID: ", newFormDataToSave.id);
+        let existingFormIndex = savedForms.findIndex(
+          (form: FormBuilderData) => form.id === newFormDataToSave.id
+        );
         savedForms[existingFormIndex] = newFormDataToSave;
         formDataWithId = newFormDataToSave;
       } else {
-        console.log("bi");
+        console.log("Form has no id, saving as new ");
         // Save with a new ID
         const formId = `form_${Date.now()}_${Math.random()
           .toString(36)
