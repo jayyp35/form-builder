@@ -7,11 +7,13 @@ import {
 } from "../../types/formbuider_types";
 import Button from "../../common/_custom/Button/Button";
 import Checkbox from "../../common/_custom/Checkbox/Checkbox";
+import Dropdown from "../../common/_custom/Dropdown/Dropdown";
 
 function FormBuilder() {
   const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>([]);
-  const [newFormComponentData, setNewFormComponentData] =
-    useState<FormBuilderComponent | null>(null);
+  const [expandIndex, setExpandIndex] = useState<number | null>(null);
+  //   const [newFormComponentData, setNewFormComponentData] =
+  //     useState<FormBuilderComponent | null>(null);
 
   const initialiseNewQuestion = () => {
     const newQuestionData: FormBuilderComponent = {
@@ -21,40 +23,84 @@ function FormBuilder() {
       isHidden: false,
       helperText: "",
     };
-    setNewFormComponentData(newQuestionData);
-  };
-
-  const changeNewFormComponentValue = (
-    keyName: string,
-    value: string | boolean
-  ) => {
-    setNewFormComponentData((existingData) => {
-      if (!existingData) return null;
-      return {
-        ...existingData,
-        [keyName]: value,
-      };
+    setFormBuilderData((existingData) => {
+      setExpandIndex(existingData.length);
+      return [...existingData, newQuestionData];
     });
   };
 
+  const changeFormValue = (keyName: string, value: string | boolean) => {
+    if (expandIndex === null) return;
+
+    setFormBuilderData((existingData) =>
+      existingData.map((component, index) =>
+        index === expandIndex ? { ...component, [keyName]: value } : component
+      )
+    );
+  };
+
+  console.log("expandIndex", expandIndex);
+  console.log("formBuilderData", formBuilderData);
   return (
     <div className={styles.FormBuilder}>
       <div className={styles.Title}>Create a new form</div>
-      {/* <div>
+      <div>
         {formBuilderData.map(
           (formBuilderComponent: FormBuilderComponent, i: number) => (
-            <div>
-              <Input placeholder="Question Title" />
-              <div className={styles.QuestionTypeRow}>
-                <Input placeholder="Question Type" />
-                <Checkbox checked={} onChange={() => {}} />
-              </div>
-              <Input placeholder="Helper Text" />
+            <div className={styles.FormBody} key={i}>
+              {expandIndex !== null && formBuilderData?.[expandIndex] ? (
+                <>
+                  <div className={styles.QuestionTitleRow}>
+                    <Input
+                      placeholder="Question Title"
+                      value={formBuilderComponent.title}
+                      onChange={(value) => changeFormValue("title", value)}
+                    />
+                    <div>ok</div>
+                  </div>
+                  <div className={styles.QuestionTypeRow}>
+                    <Input
+                      placeholder="Question Type"
+                      value={formBuilderComponent.type}
+                      onChange={(value) => changeFormValue("type", value)}
+                    />
+                    <div className={styles.Checks}>
+                      <Checkbox
+                        label="Required"
+                        checked={formBuilderComponent.isRequired}
+                        onChange={(checked) =>
+                          changeFormValue("isRequired", checked)
+                        }
+                      />
+                      <Checkbox
+                        label="Hidden"
+                        checked={formBuilderComponent.isHidden}
+                        onChange={(checked) =>
+                          changeFormValue("isHidden", checked)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <Input
+                    placeholder="Helper Text"
+                    value={formBuilderComponent.helperText}
+                    onChange={(value) => changeFormValue("helperText", value)}
+                  />
+                  <Dropdown
+                    options={["hi", "bye"]}
+                    placeholder="hiiii"
+                    value={formBuilderComponent.type}
+                    onChange={(value) => changeFormValue("type", value)}
+                  />
+                </>
+              ) : (
+                <div>Collapse</div>
+              )}
             </div>
           )
         )}
-      </div> */}
-      {newFormComponentData && (
+      </div>
+      {/* {newFormComponentData && (
         <div className={styles.FormBody}>
           <div className={styles.QuestionTitleRow}>
             <Input placeholder="Question Title" />
@@ -81,7 +127,7 @@ function FormBuilder() {
           </div>
           <Input placeholder="Helper Text" />
         </div>
-      )}
+      )} */}
       <div>
         <Button text="Add Question" onClick={initialiseNewQuestion} />
       </div>
