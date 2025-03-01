@@ -26,16 +26,14 @@ export const useFormBuilder = () => {
   const [expandIndex, setExpandIndex] = useState<number | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const formBuilderDataDEb = useDebouncedValue(formBuilderData);
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const formBuilderDataDebounced = useDebouncedValue(formBuilderData);
 
   useEffect(() => {
-    formBuilderDataDEb.components.length && saveData(formBuilderDataDEb);
-  }, [formBuilderDataDEb]);
+    formBuilderDataDebounced.components.length &&
+      saveData(formBuilderDataDebounced);
+  }, [formBuilderDataDebounced]);
 
   const saveData = (formBuilderData: FormBuilderData) => {
-    // if (savingState === SAVE_STATES.SAVING) return;
     setErrors({});
     if (expandIndex !== null) {
       let { isValid, errorsObject } = validateNewFormComponent(
@@ -50,11 +48,7 @@ export const useFormBuilder = () => {
     }
     setSavingData(SAVE_STATES.SAVING);
     saveFormData(formBuilderData)
-      .then((id) => {
-        // setFormBuilderData((existingData) => ({
-        //   ...existingData,
-        //   id: id,
-        // }));
+      .then(() => {
         setSavingData(SAVE_STATES.SUCCESS);
       })
       .catch(() => {
