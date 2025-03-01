@@ -66,7 +66,12 @@ function FormBuilder() {
 
       {showAddOption && (
         <div>
-          <Button text="Add Question" onClick={initialiseNewQuestion} />
+          <Button
+            text="Add Question"
+            onClick={initialiseNewQuestion}
+            disabled={savingState === SAVE_STATES.SAVING}
+            // disabled={true}
+          />
         </div>
       )}
     </div>

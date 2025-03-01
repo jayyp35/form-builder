@@ -7,6 +7,7 @@ import Loader from "../../../../common/_custom/Loader/Loader";
 import clsx from "clsx";
 import Dropdown from "../../../../common/_custom/Dropdown/Dropdown";
 import Checkbox from "../../../../common/_custom/Checkbox/Checkbox";
+import Datepick from "../../../../common/_custom/Datepick/Datepick";
 
 function FormBuilderBody({
   index,
@@ -58,7 +59,14 @@ function FormBuilderBody({
 
       <div className={styles.QuestionTypeRow}>
         <Dropdown
-          options={["Text", "Description", "Email", "Number", "Phone Number"]}
+          options={[
+            "Text",
+            "Description",
+            "Email",
+            "Number",
+            "Phone Number",
+            "Date",
+          ]}
           placeholder="Question Type*"
           value={formBuilderComponent.type}
           onChange={(value) => changeFormValue("type", value)}
@@ -113,6 +121,26 @@ function FormBuilderBody({
               onChange={(value) =>
                 changeAdditionalProperties("numberMax", value)
               }
+            />
+          </div>
+        </div>
+      )}
+      {formBuilderComponent.type === "Date" && (
+        <div className={styles.AdditionalInfoRow}>
+          <div>Select Date Range(optional)</div>
+          <div className={styles.RangeContainer}>
+            <Datepick
+              label="Select Date"
+              value={formBuilderComponent?.additionalProperties?.dateMin || ""}
+              onChange={(value) => changeAdditionalProperties("dateMin", value)}
+              placeholder="YYYY-MM-DD"
+            />
+            <Datepick
+              label="Select Date"
+              value={formBuilderComponent?.additionalProperties?.dateMax || ""}
+              onChange={(value) => changeAdditionalProperties("dateMax", value)}
+              placeholder="YYYY-MM-DD"
+              //   errorMessage={date === "" ? "Date is required" : ""}
             />
           </div>
         </div>

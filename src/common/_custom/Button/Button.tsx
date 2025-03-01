@@ -10,12 +10,14 @@ interface ButtonProps {
   text: string;
   type?: (typeof BUTTON_TYPES)[keyof typeof BUTTON_TYPES];
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 function Button({
   text,
   type = BUTTON_TYPES.PRIMARY,
   onClick = () => {},
+  disabled = false,
 }: ButtonProps) {
   return (
     <button
@@ -24,6 +26,7 @@ function Button({
         [styles.SecondaryButton]: type === BUTTON_TYPES.SECONDARY,
       })}
       onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </button>

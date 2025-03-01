@@ -25,5 +25,9 @@ export type AdditionalProperties = {
   numberType?: string;
   numberMin?: number;
   numberMax?: number;
+
+  dateMin?: string;
+  dateMax?: string;
+
   allowNegative?: boolean;
 };

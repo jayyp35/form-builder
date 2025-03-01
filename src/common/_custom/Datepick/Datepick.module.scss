@@ -1,0 +1,61 @@
+.DatepickContainer {
+  position: relative;
+  width: 100%;
+
+  .Datepick {
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+    display: block;
+    border: 1px solid #757575;
+    border-radius: 4px;
+    background: white;
+    font-size: 12px;
+    color: black;
+    &:focus {
+      outline: none;
+      border-color: #5264ae;
+    }
+    &:focus ~ .Placeholder,
+    &:not(:placeholder-shown) ~ .Placeholder {
+      top: -12px;
+      left: 5px;
+      font-size: 12px;
+      color: #5264ae;
+      background-color: white;
+      padding: 2px 5px;
+    }
+  }
+
+  .DatepickError {
+    border-color: red;
+  }
+
+  .Placeholder {
+    color: #999;
+    font-size: 14px;
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+
+  .ErrorMessage {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    font-size: 10px;
+    color: red;
+    font-weight: 500;
+  }
+
+  .Icon {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

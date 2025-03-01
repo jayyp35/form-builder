@@ -5,6 +5,8 @@ import {
 } from "../../types/formbuider_types";
 import { saveFormData } from "../../service/service";
 import { validateNewFormComponent } from "../../utils/formbuilder_validations";
+import { useDebouncedValue } from "../../utils/hooks";
+import { getFormId } from "../../utils/utils";
 
 export const SAVE_STATES = {
   SAVING: "SAVING",
@@ -15,7 +17,7 @@ export const SAVE_STATES = {
 export const useFormBuilder = () => {
   const [savingState, setSavingData] = useState<string>("");
   const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>({
-    id: "",
+    id: getFormId(),
     metadata: {
       name: "",
     },
@@ -24,25 +26,17 @@ export const useFormBuilder = () => {
   const [expandIndex, setExpandIndex] = useState<number | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  const formBuilderDataDEb = useDebouncedValue(formBuilderData);
+
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (!formBuilderData.components.length) return;
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    formBuilderDataDEb.components.length && saveData(formBuilderDataDEb);
+  }, [formBuilderDataDEb]);
 
-    timeoutRef.current = setTimeout(() => {
-      saveData();
-    }, 100);
-
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [formBuilderData.components]);
-
-  const saveData = () => {
-    if (savingState === SAVE_STATES.SAVING) return;
+  const saveData = (formBuilderData: FormBuilderData) => {
+    // if (savingState === SAVE_STATES.SAVING) return;
     setErrors({});
-    setSavingData(SAVE_STATES.SAVING);
     if (expandIndex !== null) {
       let { isValid, errorsObject } = validateNewFormComponent(
         formBuilderData.components?.[expandIndex]
@@ -54,12 +48,13 @@ export const useFormBuilder = () => {
         return;
       }
     }
+    setSavingData(SAVE_STATES.SAVING);
     saveFormData(formBuilderData)
       .then((id) => {
-        setFormBuilderData((existingData) => ({
-          ...existingData,
-          id: id,
-        }));
+        // setFormBuilderData((existingData) => ({
+        //   ...existingData,
+        //   id: id,
+        // }));
         setSavingData(SAVE_STATES.SUCCESS);
       })
       .catch(() => {

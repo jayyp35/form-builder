@@ -9,6 +9,7 @@ import styles from "./SingleFormBody.module.scss";
 import Input from "../../../../common/_custom/Input/Input";
 import Loader from "../../../../common/_custom/Loader/Loader";
 import Button from "../../../../common/_custom/Button/Button";
+import Datepick from "../../../../common/_custom/Datepick/Datepick";
 
 function SingleFormBody() {
   const params = useParams();
@@ -52,26 +53,31 @@ function SingleFormBody() {
     // "Phone Number",
     let components = structuredClone(formConfig?.components || []);
     components = components.map((singleFormComponent: FormBuilderComponent) => {
+      const value = singleFormComponent.value;
+      const type = singleFormComponent.type;
+
+      const minValue = Number(
+        singleFormComponent?.additionalProperties?.numberMin
+      );
+      const maxValue = Number(
+        singleFormComponent?.additionalProperties?.numberMax
+      );
+
+      console.log("check", Number(value), type, minValue, maxValue);
       console.log(singleFormComponent);
       let errorMessage;
 
       if (singleFormComponent.value) {
-        if (
-          singleFormComponent.type === "Email" &&
-          !emailRegex.test(singleFormComponent.value as string)
-        ) {
+        if (type === "Email" && !emailRegex.test(value as string)) {
           errorMessage = "Email is invalid";
-        } else if (singleFormComponent.type === "Number") {
-          if (
-            singleFormComponent.additionalProperties?.numberMin &&
-            singleFormComponent.additionalProperties?.numberMax &&
-            ((singleFormComponent.value as number) <
-              singleFormComponent.additionalProperties?.numberMin ||
-              (singleFormComponent.value as number) >
-                singleFormComponent.additionalProperties?.numberMax)
-          ) {
-            errorMessage = `Value must be between ${singleFormComponent.additionalProperties?.numberMin}-${singleFormComponent.additionalProperties?.numberMax}`;
-          }
+        } else if (
+          ["Number", "Years", "Range"].includes(type) &&
+          ((minValue ? Number(value) < minValue : false) ||
+            (maxValue ? maxValue && Number(value) > maxValue : false))
+        ) {
+          errorMessage = `Value must be between ${minValue}-${maxValue}`;
+        } else if (type === "Phone Number" && (value as string)?.length < 10) {
+          errorMessage = "Phone Number must be 10 digits long";
         } else {
           delete singleFormComponent.errorMessage;
         }
@@ -138,6 +144,17 @@ function SingleFormBody() {
             value={component.value || ""}
             onChange={(value) => handleInputChange(index, value)}
             type="number"
+            errorMessage={component.errorMessage}
+          />
+        );
+      case "Date":
+        return (
+          <Datepick
+            value={component.value as string}
+            onChange={(value) => handleInputChange(index, value)}
+            errorMessage={component.errorMessage}
+            minDate={component?.additionalProperties?.dateMin || ""}
+            maxDate={component?.additionalProperties?.dateMax || ""}
           />
         );
       default:
