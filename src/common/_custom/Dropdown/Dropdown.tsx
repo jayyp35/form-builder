@@ -7,6 +7,7 @@ interface DropdownProps {
   value: string;
   onChange: (val: string) => void;
   placeholder: string;
+  errorMessage?: string;
 }
 
 function Dropdown({
@@ -14,11 +15,13 @@ function Dropdown({
   value = "",
   onChange,
   placeholder,
+  errorMessage = "",
 }: DropdownProps) {
   return (
     <div className={styles.DropdownContainer}>
       <select
         className={clsx(styles.Dropdown, {
+          [styles.DropdownError]: !!errorMessage,
           [styles.DropdownHasValue]: !!value,
         })}
         value={value}
@@ -36,6 +39,9 @@ function Dropdown({
         ))}
       </select>
       {value && <label className={styles.Placeholder}>{placeholder}</label>}
+      {!!errorMessage && (
+        <div className={styles.ErrorMessage}>{errorMessage}</div>
+      )}
     </div>
   );
 }

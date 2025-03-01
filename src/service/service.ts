@@ -37,3 +37,36 @@ export function saveFormData(
     }, delay);
   });
 }
+
+export function fetchAllSavedForms(): Promise<FormBuilderData[]> {
+  return new Promise((resolve, reject) => {
+    const delay = Math.floor(Math.random() * 2000) + 1000;
+    setTimeout(() => {
+      // if (Math.random() < 0.3) {
+      //   reject(new Error("Failed to fetch saved forms. Please try again."));
+      //   return;
+      // }
+
+      const savedForms = JSON.parse(localStorage.getItem("savedForms") || "[]");
+      resolve(savedForms);
+    }, delay);
+  });
+}
+
+export function fetchFormDataById(id: string): Promise<FormBuilderData | null> {
+  return new Promise((resolve, reject) => {
+    // const delay = Math.floor(Math.random() * 2000) + 1000;
+    const delay = 2000;
+    setTimeout(() => {
+      //   if (Math.random() < 0.3) {
+      //     reject(new Error("Failed to fetch form data. Please try again."));
+      //     return;
+      //   }
+
+      const savedForms = JSON.parse(localStorage.getItem("savedForms") || "[]");
+      const formData =
+        savedForms.find((form: FormBuilderData) => form.id === id) || null;
+      resolve(formData);
+    }, delay);
+  });
+}

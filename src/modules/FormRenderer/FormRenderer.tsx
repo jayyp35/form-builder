@@ -5,8 +5,10 @@ import {
   FormBuilderData,
 } from "../../types/formbuider_types";
 import Input from "../../common/_custom/Input/Input";
+import { useNavigate } from "react-router-dom";
 
 export default function FormRenderer() {
+  const navigate = useNavigate();
   const [forms, setForms] = useState<FormBuilderComponent[]>([]);
   const savedForms = JSON.parse(localStorage.getItem("savedForms") || "");
 
@@ -50,7 +52,13 @@ export default function FormRenderer() {
 
       <div className={styles.SavedFormsContainer}>
         {savedForms?.map((formBuildData: FormBuilderData) => (
-          <div className={styles.SavedFormCard} key={formBuildData.id}>
+          <div
+            className={styles.SavedFormCard}
+            key={formBuildData.id}
+            onClick={() => {
+              navigate(`/view/${formBuildData.id}`);
+            }}
+          >
             <div className={styles.Top}>
               {formBuildData.metadata.name}
               <span className={styles.FieldsCount}>

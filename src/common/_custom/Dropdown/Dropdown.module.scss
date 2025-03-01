@@ -23,6 +23,9 @@
       border-color: #5264ae;
     }
   }
+  .DropdownError {
+    border-color: red;
+  }
   .DropdownHasValue {
     color: black;
   }
@@ -37,5 +40,15 @@
     transition: 0.2s ease all;
     background-color: white;
     padding: 2px 5px;
+  }
+
+  .ErrorMessage {
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    font-size: 10px;
+    color: red;
+    font-weight: 500;
   }
 }
