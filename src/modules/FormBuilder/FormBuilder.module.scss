@@ -16,53 +16,6 @@
     border-radius: 4px;
     padding: 24px 16px;
     margin-bottom: 16px;
-
-    display: flex;
-    flex-direction: column;
-    row-gap: 30px;
-    // padding-top: 0;
-
-    .QuestionTitleRow {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-
-      .Right {
-        display: flex;
-        align-items: center;
-
-        .Status {
-          padding: 0 20px;
-        }
-      }
-    }
-
-    .QuestionTypeRow {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      align-items: center;
-
-      .Checks {
-        padding: 0 20px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        column-gap: 20px;
-      }
-    }
-
-    .AdditionalInfoRow {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      column-gap: 10px;
-
-      .RangeContainer {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 10px;
-      }
-    }
   }
   .FormBody :global {
     animation: fadeIn 400ms ease-in-out;

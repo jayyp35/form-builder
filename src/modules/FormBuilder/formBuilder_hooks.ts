@@ -6,7 +6,7 @@ import {
 import { saveFormData } from "../../service/service";
 import { validateNewFormComponent } from "../../utils/formbuilder_validations";
 
-const SAVE_STATES = {
+export const SAVE_STATES = {
   SAVING: "SAVING",
   SUCCESS: "SUCCESS",
   ERROR: "ERROR",

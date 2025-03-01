@@ -2,19 +2,9 @@ import Input from "../../common/_custom/Input/Input";
 import styles from "./FormBuilder.module.scss";
 import { FormBuilderComponent } from "../../types/formbuider_types";
 import Button from "../../common/_custom/Button/Button";
-import Checkbox from "../../common/_custom/Checkbox/Checkbox";
-import Dropdown from "../../common/_custom/Dropdown/Dropdown";
+import { SAVE_STATES, useFormBuilder } from "./formBuilder_hooks";
+import FormBuilderBody from "./components/FormBuilderBody/FormBuilderBody";
 import chevronDown from "../../assets/chevron-down.svg";
-import greenTick from "../../assets/green-tick.svg";
-import clsx from "clsx";
-import Loader from "../../common/_custom/Loader/Loader";
-import { useFormBuilder } from "./formBuilder_hooks";
-
-const SAVE_STATES = {
-  SAVING: "SAVING",
-  SUCCESS: "SUCCESS",
-  ERROR: "ERROR",
-};
 
 function FormBuilder() {
   const {
@@ -27,11 +17,12 @@ function FormBuilder() {
     changeFormMetadata,
     changeFormValue,
     changeAdditionalProperties,
-    validateFormValue,
   } = useFormBuilder();
 
-  const ifAllOk = true;
   const errorsExist = !!Object.keys(errors).length;
+  const showAddOption =
+    !savingState ||
+    [SAVE_STATES.SUCCESS, SAVE_STATES.SAVING].includes(savingState);
 
   return (
     <div className={styles.FormBuilder}>
@@ -41,7 +32,6 @@ function FormBuilder() {
           placeholder="Form Name"
           value={formBuilderData.metadata.name}
           onChange={(value) => changeFormMetadata("name", value)}
-          //   errorMessage={errors["title"] || ""}
         />
       </div>
       <div>
@@ -62,126 +52,24 @@ function FormBuilder() {
                   />
                 </div>
               ) : (
-                <>
-                  <div className={styles.QuestionTitleRow}>
-                    <Input
-                      label="Question Title*"
-                      value={formBuilderComponent.title}
-                      onChange={(value) => changeFormValue("title", value)}
-                      errorMessage={errors.title || ""}
-                    />
-
-                    <div className={styles.Right}>
-                      <div className={styles.Status}>
-                        {savingState === SAVE_STATES.SAVING ? (
-                          <Loader width="20px" />
-                        ) : savingState === SAVE_STATES.ERROR ? (
-                          <></>
-                        ) : (
-                          <img src={greenTick} alt="status" height={"20px"} />
-                        )}
-                      </div>
-                      <img
-                        src={chevronDown}
-                        className={clsx(styles.DownIcon, {
-                          [styles.Rotate]: i === expandIndex,
-                        })}
-                        alt="down"
-                        height={"20px"}
-                        style={{
-                          transform: i === expandIndex ? "rotate(180deg)" : "",
-                        }}
-                        onClick={() => {
-                          if (!errorsExist) setExpandIndex(null);
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className={styles.QuestionTypeRow}>
-                    <Dropdown
-                      options={[
-                        "Text",
-                        "Description",
-                        "Email",
-                        "Number",
-                        "Phone Number",
-                      ]}
-                      placeholder="Question Type*"
-                      value={formBuilderComponent.type}
-                      onChange={(value) => changeFormValue("type", value)}
-                      errorMessage={errors.type || ""}
-                    />
-                    <div className={styles.Checks}>
-                      <Checkbox
-                        label="Required"
-                        checked={formBuilderComponent.isRequired}
-                        onChange={(checked) =>
-                          changeFormValue("isRequired", checked)
-                        }
-                      />
-                      <Checkbox
-                        label="Hidden"
-                        checked={formBuilderComponent.isHidden}
-                        onChange={(checked) =>
-                          changeFormValue("isHidden", checked)
-                        }
-                      />
-                    </div>
-                  </div>
-                  <Input
-                    label="Helper Text"
-                    value={formBuilderComponent.helperText}
-                    onChange={(value) => changeFormValue("helperText", value)}
-                  />
-
-                  {formBuilderComponent.type === "Number" && (
-                    <div className={styles.AdditionalInfoRow}>
-                      <Dropdown
-                        options={["Default", "Years", "Range", "Percentage"]}
-                        placeholder="Number Type*"
-                        value={
-                          formBuilderComponent?.additionalProperties
-                            ?.numberType || ""
-                        }
-                        onChange={(value) =>
-                          changeAdditionalProperties("numberType", value)
-                        }
-                      />
-                      <div className={styles.RangeContainer}>
-                        <Input
-                          label="Min"
-                          type="number"
-                          value={
-                            formBuilderComponent?.additionalProperties
-                              ?.numberMin || ""
-                          }
-                          onChange={(value) =>
-                            changeAdditionalProperties("numberMin", value)
-                          }
-                        />
-                        <Input
-                          label="Max"
-                          type="number"
-                          value={
-                            formBuilderComponent?.additionalProperties
-                              ?.numberMax || ""
-                          }
-                          onChange={(value) =>
-                            changeAdditionalProperties("numberMax", value)
-                          }
-                        />
-                      </div>
-                    </div>
-                  )}
-                </>
+                <FormBuilderBody
+                  index={i}
+                  formBuilderComponent={formBuilderComponent}
+                  changeFormValue={changeFormValue}
+                  savingState={savingState}
+                  expandIndex={expandIndex}
+                  setExpandIndex={setExpandIndex}
+                  errors={errors}
+                  errorsExist={errorsExist}
+                  changeAdditionalProperties={changeAdditionalProperties}
+                />
               )}
             </div>
           )
         )}
       </div>
 
-      {!errorsExist && (
+      {showAddOption && (
         <div>
           <Button text="Add Question" onClick={initialiseNewQuestion} />
         </div>
