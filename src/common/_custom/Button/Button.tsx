@@ -10,15 +10,21 @@ const BUTTON_TYPES = {
 interface ButtonProps {
   text: string;
   type?: (typeof BUTTON_TYPES)[keyof typeof BUTTON_TYPES];
+  onClick?: () => void;
 }
 
-function Button({ text, type = BUTTON_TYPES.PRIMARY }: ButtonProps) {
+function Button({
+  text,
+  type = BUTTON_TYPES.PRIMARY,
+  onClick = () => {},
+}: ButtonProps) {
   return (
     <button
       className={clsx(styles.Button, {
         [styles.PrimaryButton]: type === BUTTON_TYPES.PRIMARY,
         [styles.SecondaryButton]: type === BUTTON_TYPES.SECONDARY,
       })}
+      onClick={onClick}
     >
       {text}
     </button>

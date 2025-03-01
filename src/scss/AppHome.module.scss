@@ -1,10 +1,12 @@
 .AppHome {
   font-size: 18px;
+  border: 1px dashed white;
 
   .Buttons {
     margin-top: var(--flex-gap);
     display: flex;
     align-items: center;
+    justify-content: center;
     column-gap: var(--flex-gap);
   }
 }
