@@ -5,12 +5,12 @@
 
   .Dropdown {
     width: 100%;
-    padding: 10px 10px 10px 5px;
+    padding: 10px;
     display: block;
     border: 1px solid #757575;
     border-radius: 4px;
     background: white;
-    font-size: 16px;
+    font-size: 14px;
     color: black;
     appearance: none;
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23757575' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-chevron-down'%3E%3Cpath d='M6 9l6-6 6 6'/%3E%3C/svg%3E");
@@ -22,22 +22,17 @@
       outline: none;
       border-color: #5264ae;
     }
-
-    &:focus ~ .Placeholder,
-    &:not(:placeholder-shown) ~ .Placeholder {
-      top: -20px;
-      font-size: 12px;
-      color: #5264ae;
-    }
   }
 
   .Placeholder {
     color: #999;
-    font-size: 16px;
+    font-size: 12px;
     position: absolute;
     pointer-events: none;
     left: 5px;
-    top: 10px;
+    top: -10px;
     transition: 0.2s ease all;
+    background-color: white;
+    padding: 2px 5px;
   }
 }

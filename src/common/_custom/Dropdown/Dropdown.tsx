@@ -9,6 +9,7 @@ interface DropdownProps {
 }
 
 function Dropdown({ options, value, onChange, placeholder }: DropdownProps) {
+  console.log("value", value);
   return (
     <div className={styles.DropdownContainer}>
       <select
@@ -16,16 +17,18 @@ function Dropdown({ options, value, onChange, placeholder }: DropdownProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
-        <option value="" disabled hidden>
-          {placeholder}
-        </option>
+        {!value && (
+          <option value="" disabled hidden>
+            {placeholder}
+          </option>
+        )}
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}
           </option>
         ))}
       </select>
-      <label className={styles.Placeholder}>{placeholder}</label>
+      {value && <label className={styles.Placeholder}>{placeholder}</label>}
     </div>
   );
 }

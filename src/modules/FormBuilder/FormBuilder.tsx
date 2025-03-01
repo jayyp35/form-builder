@@ -59,7 +59,7 @@ function FormBuilder() {
                   >
                     {expandIndex === i ? (
                       <Input
-                        placeholder="Question Title"
+                        placeholder="Question Title*"
                         value={formBuilderComponent.title}
                         onChange={(value) => changeFormValue("title", value)}
                       />
@@ -83,8 +83,14 @@ function FormBuilder() {
                     <>
                       <div className={styles.QuestionTypeRow}>
                         <Dropdown
-                          options={["text", "number"]}
-                          placeholder="hiiii"
+                          options={[
+                            "Text",
+                            "Description",
+                            "Email",
+                            "Number",
+                            "Phone Number",
+                          ]}
+                          placeholder="Question Type*"
                           value={formBuilderComponent.type}
                           onChange={(value) => changeFormValue("type", value)}
                         />
