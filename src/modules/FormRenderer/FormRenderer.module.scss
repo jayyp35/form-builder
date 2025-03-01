@@ -47,3 +47,7 @@
     }
   }
 }
+
+.FormRenderer :global {
+  animation: fadeIn 400ms ease-in-out;
+}

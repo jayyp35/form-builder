@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-// import Button from "../common/Button/Button";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function InvalidRoute() {

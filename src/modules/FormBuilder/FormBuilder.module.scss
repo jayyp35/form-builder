@@ -64,6 +64,9 @@
       }
     }
   }
+  .FormBody :global {
+    animation: fadeIn 400ms ease-in-out;
+  }
 
   .FormBodyCollapsed {
     display: flex;
@@ -75,4 +78,8 @@
       cursor: pointer;
     }
   }
+}
+
+.FormBuilder :global {
+  animation: fadeIn 400ms ease-in-out;
 }

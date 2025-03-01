@@ -42,10 +42,10 @@ export function fetchAllSavedForms(): Promise<FormBuilderData[]> {
   return new Promise((resolve, reject) => {
     const delay = Math.floor(Math.random() * 2000) + 1000;
     setTimeout(() => {
-      // if (Math.random() < 0.3) {
-      //   reject(new Error("Failed to fetch saved forms. Please try again."));
-      //   return;
-      // }
+      //   if (Math.random() < 0.3) {
+      //     reject(new Error("Failed to fetch saved forms. Please try again."));
+      //     return;
+      //   }
 
       const savedForms = JSON.parse(localStorage.getItem("savedForms") || "[]");
       resolve(savedForms);

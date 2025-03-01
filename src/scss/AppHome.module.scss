@@ -11,3 +11,11 @@
     column-gap: var(--flex-gap);
   }
 }
+
+:global(.AppHome) {
+  animation: fadeIn 2s ease-in-out;
+}
+
+.AppHome :global {
+  animation: fadeIn 400ms ease-in-out;
+}
