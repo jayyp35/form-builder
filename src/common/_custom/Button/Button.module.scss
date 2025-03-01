@@ -1,0 +1,43 @@
+.Button {
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.PrimaryButton {
+  background-color: var(--primary-color);
+  &:hover {
+    background-color: var(--primary-hover-color);
+  }
+
+  &:active {
+    background-color: var(--primary-active-color);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--primary-shadow-color);
+  }
+}
+.SecondaryButton {
+  background-color: var(--secondary-color);
+  &:hover {
+    background-color: var(--secondary-hover-color);
+  }
+
+  &:active {
+    background-color: var(--secondary-active-color);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--secondary-shadow-color);
+  }
+}
