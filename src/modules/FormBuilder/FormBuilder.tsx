@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Input from "../../common/_custom/Input/Input";
 import styles from "./FormBuilder.module.scss";
 import {
@@ -12,15 +12,67 @@ import chevronDown from "../../assets/chevron-down.svg";
 import greenTick from "../../assets/green-tick.svg";
 import clsx from "clsx";
 import Loader from "../../common/_custom/Loader/Loader";
+import { saveFormData } from "../../service/service";
+import { validateNewFormComponent } from "./validations";
 
 function FormBuilder() {
-  const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>([]);
+  const [savingData, setSavingData] = useState(false);
+  const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>({
+    id: "",
+    metadata: {
+      name: "",
+    },
+    components: [],
+  });
   const [expandIndex, setExpandIndex] = useState<number | null>(null);
   const [errors, setErrors] = useState<{
     [key: string]: string;
   }>({});
 
   const ifAllOk = true;
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!formBuilderData.components.length) return;
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      saveData();
+    }, 1000);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [formBuilderData.components]);
+
+  const saveData = () => {
+    console.log("saving");
+    setSavingData(true);
+    if (expandIndex !== null) {
+      let { isValid, errorsObject } = validateNewFormComponent(
+        formBuilderData.components?.[expandIndex]
+      );
+
+      if (!isValid) {
+        setErrors(errorsObject);
+        setSavingData(false);
+        return;
+      }
+    }
+    saveFormData(formBuilderData)
+      .then((id) => {
+        setFormBuilderData((existingData) => ({
+          ...existingData,
+          id: id,
+        }));
+      })
+      .catch(() => {
+        console.log("error in form save");
+      })
+      .finally(() => {
+        setSavingData(false);
+      });
+  };
   const initialiseNewQuestion = () => {
     const newQuestionData: FormBuilderComponent = {
       title: "",
@@ -30,20 +82,32 @@ function FormBuilder() {
       helperText: "",
     };
     setFormBuilderData((existingData) => {
-      setExpandIndex(existingData.length);
-      return [...existingData, newQuestionData];
+      setExpandIndex(existingData.components?.length);
+      return {
+        ...existingData,
+        components: [...existingData.components, newQuestionData],
+      };
     });
+  };
+
+  const changeFormMetadata = (keyName: string, value: string | number) => {
+    setFormBuilderData((existingData) => ({
+      ...existingData,
+      metadata: {
+        [keyName]: value,
+      },
+    }));
   };
 
   const changeFormValue = (keyName: string, value: string | boolean) => {
     if (expandIndex === null) return;
 
-    setFormBuilderData((existingData) =>
-      existingData.map((component, index) =>
+    setFormBuilderData((existingData) => ({
+      ...existingData,
+      components: existingData.components.map((component, index) =>
         index === expandIndex ? { ...component, [keyName]: value } : component
-      )
-    );
-    validateFormValue(expandIndex, keyName, value);
+      ),
+    }));
   };
 
   const changeAdditionalProperties = (
@@ -52,8 +116,9 @@ function FormBuilder() {
   ) => {
     if (expandIndex === null) return;
 
-    setFormBuilderData((existingData) =>
-      existingData.map((component, index) =>
+    setFormBuilderData((existingData) => ({
+      ...existingData,
+      components: existingData.components.map((component, index) =>
         index === expandIndex
           ? {
               ...component,
@@ -63,8 +128,8 @@ function FormBuilder() {
               },
             }
           : component
-      )
-    );
+      ),
+    }));
   };
 
   const validateFormValue = (
@@ -86,17 +151,23 @@ function FormBuilder() {
     }));
   };
 
-  console.log("expandIndex", expandIndex);
-  console.log("formBuilderData", formBuilderData);
-  console.log("errors", errors);
   return (
     <div className={styles.FormBuilder}>
-      <div className={styles.Title}>Create a new form</div>
+      <div className={styles.Title}>
+        Create a new form
+        <Input
+          placeholder="Form Name"
+          value={formBuilderData.metadata.name}
+          onChange={(value) => changeFormMetadata("name", value)}
+          //   errorMessage={errors["title"] || ""}
+        />
+      </div>
       <div>
-        {formBuilderData.map(
+        {formBuilderData.components.map(
           (formBuilderComponent: FormBuilderComponent, i: number) => (
             <div className={styles.FormBody} key={i}>
-              {expandIndex !== null && formBuilderData?.[expandIndex] ? (
+              {expandIndex !== null &&
+              formBuilderData?.components?.[expandIndex] ? (
                 <>
                   <div
                     className={styles.QuestionTitleRow}
@@ -104,7 +175,7 @@ function FormBuilder() {
                   >
                     {expandIndex === i ? (
                       <Input
-                        placeholder="Question Title*"
+                        label="Question Title*"
                         value={formBuilderComponent.title}
                         onChange={(value) => changeFormValue("title", value)}
                         errorMessage={errors["title"] || ""}
@@ -113,10 +184,15 @@ function FormBuilder() {
                       <div>{formBuilderComponent.title}</div>
                     )}
                     <div className={styles.Right}>
-                      <div className={styles.Status}>
-                        {/* <img src={greenTick} alt="status" height={"20px"} /> */}
-                        <Loader width="20px" />
-                      </div>
+                      {expandIndex === i && (
+                        <div className={styles.Status}>
+                          {savingData ? (
+                            <Loader width="20px" />
+                          ) : (
+                            <img src={greenTick} alt="status" height={"20px"} />
+                          )}
+                        </div>
+                      )}
                       <img
                         src={chevronDown}
                         className={clsx(styles.DownIcon, {
@@ -162,7 +238,7 @@ function FormBuilder() {
                         </div>
                       </div>
                       <Input
-                        placeholder="Helper Text"
+                        label="Helper Text"
                         value={formBuilderComponent.helperText}
                         onChange={(value) =>
                           changeFormValue("helperText", value)
@@ -189,7 +265,7 @@ function FormBuilder() {
                           />
                           <div className={styles.RangeContainer}>
                             <Input
-                              placeholder="Min"
+                              label="Min"
                               type="number"
                               value={
                                 formBuilderComponent?.additionalProperties
@@ -198,13 +274,9 @@ function FormBuilder() {
                               onChange={(value) =>
                                 changeAdditionalProperties("numberMin", value)
                               }
-                              //   disabled={
-                              //     formBuilderComponent?.additionalProperties
-                              //       ?.numberType === "Percentage"
-                              //   }
                             />
                             <Input
-                              placeholder="Max"
+                              label="Max"
                               type="number"
                               value={
                                 formBuilderComponent?.additionalProperties
@@ -213,10 +285,6 @@ function FormBuilder() {
                               onChange={(value) =>
                                 changeAdditionalProperties("numberMax", value)
                               }
-                              //   disabled={
-                              //     formBuilderComponent?.additionalProperties
-                              //       ?.numberType === "Percentage"
-                              //   }
                             />
                           </div>
                         </div>
@@ -277,7 +345,7 @@ function FormBuilder() {
           <Button text="Add Question" onClick={initialiseNewQuestion} />
         </div>
       )}
-      {ifAllOk && (
+      {/* {ifAllOk && (
         <div>
           <Button
             type="secondary"
@@ -290,7 +358,7 @@ function FormBuilder() {
             }}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 }

@@ -15,7 +15,6 @@ function Dropdown({
   onChange,
   placeholder,
 }: DropdownProps) {
-  console.log("value", value);
   return (
     <div className={styles.DropdownContainer}>
       <select

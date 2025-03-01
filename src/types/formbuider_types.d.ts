@@ -1,4 +1,8 @@
-export type FormBuilderData = FormBuilderComponent[];
+export type FormBuilderData = {
+  id?: string;
+  metadata: FormBuilderMetadata;
+  components: FormBuilderComponent[];
+};
 export interface FormBuilderComponent {
   title: string;
   type: string;

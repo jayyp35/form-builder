@@ -5,6 +5,36 @@
     border-bottom: 2px solid white;
     margin-bottom: 20px;
   }
+
+  .SavedFormsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+    .SavedFormCard {
+      background-color: white;
+      border-radius: 4px;
+      padding: 16px;
+      font-size: 14px;
+      cursor: pointer;
+
+      .Top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .FieldsCount {
+          color: #999;
+        }
+      }
+      .LastUpdated {
+        margin-top: 10px;
+        font-size: 10px;
+        // font-style: italic;
+        color: #999;
+      }
+    }
+  }
+
   .FormContainer {
     background-color: white;
     border-radius: 4px;

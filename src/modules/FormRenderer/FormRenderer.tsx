@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import styles from "./FormRenderer.module.scss";
-import { FormBuilderComponent } from "../../types/formbuider_types";
+import {
+  FormBuilderComponent,
+  FormBuilderData,
+} from "../../types/formbuider_types";
 import Input from "../../common/_custom/Input/Input";
 
 export default function FormRenderer() {
-  const [formData, setFormData] = useState<FormBuilderComponent[]>([]);
-  const formdataLocal = JSON.parse(localStorage.getItem("_formdata") || "");
+  const [forms, setForms] = useState<FormBuilderComponent[]>([]);
+  const savedForms = JSON.parse(localStorage.getItem("savedForms") || "");
 
   useEffect(() => {
-    if (formdataLocal) setFormData(formdataLocal);
+    if (savedForms) setForms(savedForms);
   }, []);
 
   const changeValueForField = (fieldIndex: number, value: string | number) => {
-    setFormData((existingData) =>
+    setForms((existingData) =>
       existingData.map((component, index) =>
         index === fieldIndex
           ? {
@@ -43,9 +46,23 @@ export default function FormRenderer() {
   };
   return (
     <div className={styles.FormRenderer}>
-      <div className={styles.Title}>View Form</div>
+      <div className={styles.Title}>View Forms</div>
 
-      {formData.length && (
+      <div className={styles.SavedFormsContainer}>
+        {savedForms?.map((formBuildData: FormBuilderData) => (
+          <div className={styles.SavedFormCard} key={formBuildData.id}>
+            <div className={styles.Top}>
+              {formBuildData.metadata.name}
+              <span className={styles.FieldsCount}>
+                {formBuildData?.components?.length} fields
+              </span>
+            </div>
+            <div className={styles.LastUpdated}>Last updated: </div>
+          </div>
+        ))}
+      </div>
+
+      {/* {formData.length && (
         <div className={styles.FormContainer}>
           {formData?.map(
             (formDataComponent: FormBuilderComponent, i: number) => (
@@ -56,7 +73,7 @@ export default function FormRenderer() {
             )
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
