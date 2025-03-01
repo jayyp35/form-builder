@@ -9,4 +9,15 @@ export interface FormBuilderComponent {
   numberType?: string;
   numberMin?: string;
   numberMax?: string;
+
+  additionalProperties?: AdditionalProperties;
+
+  value?: string | number;
 }
+
+export type AdditionalProperties = {
+  numberType?: string;
+  numberMin?: number;
+  numberMax?: number;
+  allowNegative?: boolean;
+};

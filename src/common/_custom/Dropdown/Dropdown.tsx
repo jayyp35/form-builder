@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Dropdown.module.scss";
+import clsx from "clsx";
 
 interface DropdownProps {
   options: string[];
@@ -8,12 +9,19 @@ interface DropdownProps {
   placeholder: string;
 }
 
-function Dropdown({ options, value, onChange, placeholder }: DropdownProps) {
+function Dropdown({
+  options,
+  value = "",
+  onChange,
+  placeholder,
+}: DropdownProps) {
   console.log("value", value);
   return (
     <div className={styles.DropdownContainer}>
       <select
-        className={styles.Dropdown}
+        className={clsx(styles.Dropdown, {
+          [styles.DropdownHasValue]: !!value,
+        })}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       >
