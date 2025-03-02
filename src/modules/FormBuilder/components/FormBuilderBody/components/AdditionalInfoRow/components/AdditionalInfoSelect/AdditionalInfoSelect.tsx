@@ -14,7 +14,6 @@ function AdditionalInfoSelect({
   value: string;
   onChange: (newVal: string) => void;
 }) {
-  console.log("value", value);
   const [optionInput, setOptionInput] = useState("");
 
   const handleAddOption = () => {

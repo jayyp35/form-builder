@@ -21,6 +21,7 @@ export const SAVE_STATES = {
 export const useFormBuilder = () => {
   const [deletingIndex, setDeletingIndex] = useState<null | number>(null);
 
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [savingState, setSavingData] = useState<string>(""); //To show saving state loaders
 
   const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>({
@@ -34,6 +35,14 @@ export const useFormBuilder = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({}); //Errors object
 
   const formBuilderDataDebounced = useDebouncedValue(formBuilderData); //Debounced Form Builder State Data to save to DB
+  const localStorageProgress = JSON.parse(
+    localStorage.getItem("form_progress") || "null"
+  );
+
+  useEffect(() => {
+    if (localStorageProgress) setFormBuilderData(localStorageProgress);
+    localStorage.removeItem("form_progress");
+  }, [localStorageProgress]);
 
   useEffect(() => {
     //* Whenever debounced form data is updated, save function is triggered.
@@ -58,6 +67,7 @@ export const useFormBuilder = () => {
     saveFormData(formBuilderData)
       .then(() => {
         setSavingData(SAVE_STATES.SUCCESS);
+        setSaveSuccess(true);
       })
       .catch(() => {
         setSavingData(SAVE_STATES.ERROR);
@@ -156,6 +166,7 @@ export const useFormBuilder = () => {
   };
 
   return {
+    saveSuccess,
     savingState,
     formBuilderData,
     expandIndex,

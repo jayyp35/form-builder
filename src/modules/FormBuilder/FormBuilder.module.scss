@@ -44,3 +44,9 @@
 .FormBuilder :global {
   animation: fadeIn 400ms ease-in-out;
 }
+
+.Buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

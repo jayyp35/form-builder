@@ -14,6 +14,7 @@ function FormBuilder() {
 
   const {
     //State variables and handlers
+    saveSuccess,
     savingState,
     formBuilderData,
     expandIndex,
@@ -38,13 +39,14 @@ function FormBuilder() {
   const handleFormBodyClick = (index: number) => {
     if (expandIndex !== index) setExpandIndex(index);
   };
+
   return (
     <div className={styles.FormBuilder}>
       <div className={styles.Title}>
         <Button
           type={BUTTON_TYPES.SECONDARY}
-          text="Back"
-          onClick={() => navigate(-1)}
+          text="Home"
+          onClick={() => navigate("/")}
         />
         Create a new form
       </div>
@@ -100,16 +102,35 @@ function FormBuilder() {
         )}
       </div>
 
-      {showAddOption && (
+      <div className={styles.Buttons}>
         <div>
-          <Button
-            text="Add Question"
-            onClick={initialiseNewQuestion}
-            loading={savingState === SAVE_STATES.SAVING}
-            disabled={savingState === SAVE_STATES.SAVING}
-          />
+          {showAddOption && (
+            <Button
+              text="Add Question"
+              onClick={initialiseNewQuestion}
+              loading={savingState === SAVE_STATES.SAVING}
+              disabled={savingState === SAVE_STATES.SAVING}
+            />
+          )}
         </div>
-      )}
+        <div>
+          {saveSuccess && (
+            <Button
+              type={BUTTON_TYPES.SECONDARY}
+              text="Preview Autosaved Form"
+              onClick={() => {
+                localStorage.setItem(
+                  "form_progress",
+                  JSON.stringify(formBuilderData)
+                );
+                navigate(`/view/${formBuilderData.id}`);
+              }}
+              loading={savingState === SAVE_STATES.SAVING}
+              disabled={savingState === SAVE_STATES.SAVING}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
