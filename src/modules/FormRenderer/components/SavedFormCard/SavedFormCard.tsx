@@ -9,6 +9,9 @@ interface SavedFormCardProps {
 
 function SavedFormCard({ formBuilderData }: SavedFormCardProps) {
   const navigate = useNavigate();
+  const fieldsCount = formBuilderData?.components?.length || 0;
+  const fieldsText = fieldsCount === 1 ? "field" : "fields";
+
   return (
     <div
       className={styles.SavedFormCard}
@@ -18,9 +21,9 @@ function SavedFormCard({ formBuilderData }: SavedFormCardProps) {
       }}
     >
       <div className={styles.Top}>
-        {formBuilderData.metadata.name}
+        {formBuilderData.metadata.name || "<No Name>"}
         <span className={styles.FieldsCount}>
-          {formBuilderData?.components?.length} fields
+          {fieldsCount} {fieldsText}
         </span>
       </div>
       <div className={styles.LastUpdated}>

@@ -21,18 +21,4 @@
       column-gap: 20px;
     }
   }
-
-  .AdditionalInfoRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    column-gap: 10px;
-    font-size: 14px;
-
-    .RangeContainer {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 10px;
-    }
-  }
 }

@@ -4,6 +4,7 @@ export const FORM_BUILDER_FIEDS = {
   isRequired: "isRequired",
   isHidden: "isHidden",
   helperText: "helperText",
+  value: "value",
 };
 
 export const FORM_BUILDER_METADATA = {
@@ -23,6 +24,8 @@ export const QUESTION_TYPES = {
   Number: "Number",
   PhoneNumber: "Phone Number",
   Date: "Date",
+  SingleSelect: "Single Select",
+  MultiSelect: "Multi Select",
 
   NumberType: "numberType",
 };
@@ -34,6 +37,8 @@ export const questionTypesDropdownOptions = [
   QUESTION_TYPES.Number,
   QUESTION_TYPES.PhoneNumber,
   QUESTION_TYPES.Date,
+  QUESTION_TYPES.SingleSelect,
+  QUESTION_TYPES.MultiSelect,
 ];
 
 export const NUMBER_TYPE_SUBTYPES = {

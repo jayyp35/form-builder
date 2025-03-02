@@ -14,6 +14,7 @@ import {
 import { YMDdateFormat } from "../../../../utils/date_utils";
 import styles from "./FormBuilderBody.module.scss";
 import FormBuilderBody_Right from "./components/FormBuilderBody_Right/FormBuilderBody_Right";
+import AdditionalInfoRow from "./components/AdditionalInfoRow/AdditionalInfoRow";
 
 function FormBuilderBody({
   index,
@@ -77,72 +78,16 @@ function FormBuilderBody({
           changeFormValue(FORM_BUILDER_FIEDS.helperText, value)
         }
       />
+      <Input
+        label="Default Value"
+        value={formBuilderComponent.value}
+        onChange={(value) => changeFormValue(FORM_BUILDER_FIEDS.value, value)}
+      />
 
-      {formBuilderComponent.type === QUESTION_TYPES.Number && (
-        <div className={styles.AdditionalInfoRow}>
-          <Dropdown
-            options={numberTypeSubtypesDropdownOptions}
-            placeholder="Number Type*"
-            value={formBuilderComponent?.additionalProperties?.numberType || ""}
-            onChange={(value) =>
-              changeAdditionalProperties(QUESTION_TYPES.NumberType, value)
-            }
-          />
-          {[
-            NUMBER_TYPE_SUBTYPES.Years,
-            NUMBER_TYPE_SUBTYPES.Range,
-            NUMBER_TYPE_SUBTYPES.Percentage,
-          ].includes(
-            formBuilderComponent?.additionalProperties?.numberType
-          ) && (
-            <div className={styles.RangeContainer}>
-              <Input
-                label="Min"
-                type={INPUT_TYPES.NUMBER}
-                value={
-                  formBuilderComponent?.additionalProperties?.numberMin || ""
-                }
-                onChange={(value) =>
-                  changeAdditionalProperties(ADDITIONAL_DATA.NumberMin, value)
-                }
-              />
-              <Input
-                label="Max"
-                type={INPUT_TYPES.NUMBER}
-                value={
-                  formBuilderComponent?.additionalProperties?.numberMax || ""
-                }
-                onChange={(value) =>
-                  changeAdditionalProperties(ADDITIONAL_DATA.NumberMax, value)
-                }
-              />
-            </div>
-          )}
-        </div>
-      )}
-      {formBuilderComponent.type === QUESTION_TYPES.Date && (
-        <div className={styles.AdditionalInfoRow}>
-          <div>Select Date Range(optional)</div>
-          <div className={styles.RangeContainer}>
-            <Datepick
-              label="Select Date"
-              value={formBuilderComponent?.additionalProperties?.dateMin || ""}
-              onChange={(value) =>
-                changeAdditionalProperties(ADDITIONAL_DATA.DateMin, value)
-              }
-              placeholder={YMDdateFormat}
-            />
-            <Datepick
-              label="Select Date"
-              value={formBuilderComponent?.additionalProperties?.dateMax || ""}
-              onChange={(value) =>
-                changeAdditionalProperties(ADDITIONAL_DATA.DateMax, value)
-              }
-              placeholder={YMDdateFormat}
-            />
-          </div>
-        </div>
-      )}
+      <AdditionalInfoRow
+        formBuilderComponent={formBuilderComponent}
+        changeAdditionalProperties={changeAdditionalProperties}
+      />
     </div>
   );
 }
