@@ -75,7 +75,7 @@ export function fetchFormDataById(id: string): Promise<FormBuilderData | null> {
 export function deleteFormComponentByIndex(
   formId: string,
   componentIndex: number
-): Promise<FormBuilderComponent[] | null> {
+): Promise<number | null> {
   return new Promise((resolve, reject) => {
     const delay = Math.floor(Math.random() * 2000) + 1000;
     setTimeout(() => {
@@ -98,7 +98,7 @@ export function deleteFormComponentByIndex(
           formData.components.splice(componentIndex, 1);
           savedForms[formIndex] = formData;
           localStorage.setItem("savedForms", JSON.stringify(savedForms));
-          resolve(formData.components || []);
+          resolve(componentIndex || null);
         } else {
           reject(new Error("Invalid component index."));
         }

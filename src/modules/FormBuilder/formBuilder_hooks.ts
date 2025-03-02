@@ -10,6 +10,7 @@ import {
 import { validateNewFormComponent } from "../../utils/formbuilder_validations";
 import { useDebouncedValue } from "../../utils/hooks";
 import { getFormId } from "../../utils/utils";
+import { toast } from "react-toastify";
 
 export const SAVE_STATES = {
   SAVING: "SAVING",
@@ -130,17 +131,26 @@ export const useFormBuilder = () => {
   ) => {
     setDeletingIndex(componentIndex);
     deleteFormComponentByIndex(formId, componentIndex)
-      .then((updatedComponents: FormBuilderComponent[] | null) => {
-        if (updatedComponents) {
-          console.log("updated compnents are", updatedComponents);
-          setFormBuilderData((existingData) => ({
-            ...existingData,
-            components: updatedComponents,
-          }));
+      .then((componentIndexDeleted: number | null) => {
+        if (componentIndexDeleted !== null) {
+          setFormBuilderData((existingData) => {
+            const updatedComponents = existingData.components.filter(
+              (_, index) => index !== componentIndexDeleted
+            );
+            if (expandIndex === formBuilderData.components?.length - 1) {
+              setExpandIndex(updatedComponents.length - 1);
+            }
+            return {
+              ...existingData,
+              components: updatedComponents,
+            };
+          });
         }
       })
       .catch((err) => {
-        window.alert("Could not delete");
+        console.log("error is", err);
+        toast.error(err.message);
+        // window.alert("Could not delete");
       })
       .finally(() => setDeletingIndex(null));
   };

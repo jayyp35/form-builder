@@ -10,15 +10,15 @@ export const validateNewFormComponent = (
 ): ValidationResult => {
   let errors: any = {};
 
-  if (!formBuilderData.title) {
+  if (!formBuilderData?.title) {
     errors.title = "Title is required";
   }
-  if (!formBuilderData.type) {
+  if (!formBuilderData?.type) {
     errors.type = "Type is required";
   }
 
   return {
-    isValid: !Object.keys(errors).length,
+    isValid: !Object.keys(errors)?.length,
     errorsObject: errors,
   };
 };
