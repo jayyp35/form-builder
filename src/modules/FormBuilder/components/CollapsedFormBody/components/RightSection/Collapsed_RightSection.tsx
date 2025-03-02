@@ -7,11 +7,10 @@ interface RightSectionProps {
   setExpandIndex: Function;
 }
 
-function Collapsed_RightSection({
-  index,
-  errorsExist,
-  setExpandIndex,
-}: RightSectionProps) {
+function Collapsed_RightSection({}: // index,
+// errorsExist,
+// setExpandIndex,
+RightSectionProps) {
   return (
     <div className={styles.RightSection}>
       <img
@@ -19,18 +18,15 @@ function Collapsed_RightSection({
         className={styles.DeleteIcon}
         alt="down"
         height={"20px"}
-        onClick={() => {
-          if (!errorsExist) setExpandIndex(index);
-        }}
+        // onClick={() => {
+        //   if (!errorsExist) setExpandIndex(index);
+        // }}
       />
       <img
         src={chevron_down}
         className={styles.DownIcon}
         alt="down"
         height={"20px"}
-        onClick={() => {
-          if (!errorsExist) setExpandIndex(index);
-        }}
       />
     </div>
   );

@@ -1,8 +1,13 @@
 .CollapsedFormBody {
+  cursor: pointer;
+
   .QuestionTitleRow {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     font-size: 14px;
+    .Incomplete {
+      color: red;
+    }
   }
 }

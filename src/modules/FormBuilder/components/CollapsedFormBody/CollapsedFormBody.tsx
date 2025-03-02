@@ -18,7 +18,11 @@ function CollapsedFormBody({
   return (
     <div className={styles.CollapsedFormBody}>
       <div className={styles.QuestionTitleRow}>
-        <div>{formBuilderComponent.title}</div>
+        {errorsExist ? (
+          <div className={styles.Incomplete}>Form component incomplete</div>
+        ) : (
+          <div>{formBuilderComponent.title}</div>
+        )}
         <Collapsed_RightSection
           index={index}
           errorsExist={errorsExist}

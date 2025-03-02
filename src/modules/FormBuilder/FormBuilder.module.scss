@@ -16,6 +16,13 @@
     border-radius: 4px;
     padding: 24px 16px;
     margin-bottom: 16px;
+    border: 2px solid transparent;
+  }
+  .Collapsed {
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(243, 243, 243);
+    }
   }
   .FormBody :global {
     animation: fadeIn 400ms ease-in-out;

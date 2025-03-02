@@ -7,6 +7,7 @@ import Button, { BUTTON_TYPES } from "../../common/_custom/Button/Button";
 import FormBuilderBody from "./components/FormBuilderBody/FormBuilderBody";
 import CollapsedFormBody from "./components/CollapsedFormBody/CollapsedFormBody";
 import styles from "./FormBuilder.module.scss";
+import clsx from "clsx";
 
 function FormBuilder() {
   const navigate = useNavigate();
@@ -31,6 +32,9 @@ function FormBuilder() {
     !savingState ||
     [SAVE_STATES.SUCCESS, SAVE_STATES.SAVING].includes(savingState);
 
+  const handleFormBodyClick = (index: number) => {
+    if (expandIndex !== index) setExpandIndex(index);
+  };
   return (
     <div className={styles.FormBuilder}>
       <div className={styles.Title}>
@@ -50,14 +54,24 @@ function FormBuilder() {
         />
         {formBuilderData.components.map(
           (formBuilderComponent: FormBuilderComponent, i: number) => (
-            <div className={styles.FormBody} key={i}>
+            <div
+              className={clsx(styles.FormBody, {
+                [styles.Collapsed]: expandIndex !== i,
+              })}
+              key={i}
+              onClick={() => handleFormBodyClick(i)}
+            >
               {expandIndex !== i ? (
                 <CollapsedFormBody
                   key={i}
                   index={i}
                   setExpandIndex={setExpandIndex}
                   formBuilderComponent={formBuilderComponent}
-                  errorsExist={errorsExist}
+                  errorsExist={
+                    i === formBuilderData.components.length - 1
+                      ? errorsExist
+                      : false
+                  }
                 />
               ) : (
                 <FormBuilderBody
@@ -68,7 +82,9 @@ function FormBuilder() {
                   savingState={savingState}
                   expandIndex={expandIndex}
                   setExpandIndex={setExpandIndex}
-                  errors={errors}
+                  errors={
+                    i === formBuilderData.components.length - 1 ? errors : {}
+                  }
                   errorsExist={errorsExist}
                   changeAdditionalProperties={changeAdditionalProperties}
                 />
@@ -83,6 +99,7 @@ function FormBuilder() {
           <Button
             text="Add Question"
             onClick={initialiseNewQuestion}
+            loading={savingState === SAVE_STATES.SAVING}
             disabled={savingState === SAVE_STATES.SAVING}
           />
         </div>
