@@ -1,12 +1,9 @@
-import {
-  FormBuilderComponent,
-  FormBuilderData,
-} from "../types/formbuider_types";
+import { FormBuilderData } from "../types/formbuider_types";
 
 export function saveFormData(
   newFormDataToSave: FormBuilderData
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     console.log("newFormDataToSave", newFormDataToSave);
     const delay = Math.floor(Math.random() * 2000) + 1000;
     setTimeout(() => {
@@ -40,7 +37,7 @@ export function saveFormData(
 }
 
 export function fetchAllSavedForms(): Promise<FormBuilderData[]> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const delay = Math.floor(Math.random() * 2000) + 1000;
     setTimeout(() => {
       //   if (Math.random() < 0.3) {
@@ -55,7 +52,7 @@ export function fetchAllSavedForms(): Promise<FormBuilderData[]> {
 }
 
 export function fetchFormDataById(id: string): Promise<FormBuilderData | null> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     // const delay = Math.floor(Math.random() * 2000) + 1000;
     const delay = 2000;
     setTimeout(() => {
