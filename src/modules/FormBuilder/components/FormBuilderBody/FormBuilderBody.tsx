@@ -101,28 +101,32 @@ function FormBuilderBody({
               changeAdditionalProperties("numberType", value)
             }
           />
-          <div className={styles.RangeContainer}>
-            <Input
-              label="Min"
-              type="number"
-              value={
-                formBuilderComponent?.additionalProperties?.numberMin || ""
-              }
-              onChange={(value) =>
-                changeAdditionalProperties("numberMin", value)
-              }
-            />
-            <Input
-              label="Max"
-              type="number"
-              value={
-                formBuilderComponent?.additionalProperties?.numberMax || ""
-              }
-              onChange={(value) =>
-                changeAdditionalProperties("numberMax", value)
-              }
-            />
-          </div>
+          {["Years", "Range", "Percentage"].includes(
+            formBuilderComponent?.additionalProperties?.numberType
+          ) && (
+            <div className={styles.RangeContainer}>
+              <Input
+                label="Min"
+                type="number"
+                value={
+                  formBuilderComponent?.additionalProperties?.numberMin || ""
+                }
+                onChange={(value) =>
+                  changeAdditionalProperties("numberMin", value)
+                }
+              />
+              <Input
+                label="Max"
+                type="number"
+                value={
+                  formBuilderComponent?.additionalProperties?.numberMax || ""
+                }
+                onChange={(value) =>
+                  changeAdditionalProperties("numberMax", value)
+                }
+              />
+            </div>
+          )}
         </div>
       )}
       {formBuilderComponent.type === "Date" && (
