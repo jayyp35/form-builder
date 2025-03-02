@@ -3,7 +3,10 @@ import {
   FormBuilderComponent,
   FormBuilderData,
 } from "../../types/formbuider_types";
-import { saveFormData } from "../../service/service";
+import {
+  deleteFormComponentByIndex,
+  saveFormData,
+} from "../../service/service";
 import { validateNewFormComponent } from "../../utils/formbuilder_validations";
 import { useDebouncedValue } from "../../utils/hooks";
 import { getFormId } from "../../utils/utils";
@@ -15,7 +18,10 @@ export const SAVE_STATES = {
 };
 
 export const useFormBuilder = () => {
+  const [deletingIndex, setDeletingIndex] = useState<null | number>(null);
+
   const [savingState, setSavingData] = useState<string>(""); //To show saving state loaders
+
   const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>({
     id: getFormId(),
     metadata: {
@@ -118,6 +124,27 @@ export const useFormBuilder = () => {
     }));
   };
 
+  const handleDeleteFormComponent = (
+    formId: string,
+    componentIndex: number
+  ) => {
+    setDeletingIndex(componentIndex);
+    deleteFormComponentByIndex(formId, componentIndex)
+      .then((updatedComponents: FormBuilderComponent[] | null) => {
+        if (updatedComponents) {
+          console.log("updated compnents are", updatedComponents);
+          setFormBuilderData((existingData) => ({
+            ...existingData,
+            components: updatedComponents,
+          }));
+        }
+      })
+      .catch((err) => {
+        window.alert("Could not delete");
+      })
+      .finally(() => setDeletingIndex(null));
+  };
+
   return {
     savingState,
     formBuilderData,
@@ -128,5 +155,21 @@ export const useFormBuilder = () => {
     changeFormMetadata,
     changeFormValue,
     changeAdditionalProperties,
+
+    deletingIndex,
+    handleDeleteFormComponent,
   };
 };
+
+// const useDeleteFormComponent = (formId: string, componentIndex: number) => {
+//   const handleDeleteFormComponent = () => {
+//     deleteFormComponentByIndex(formId, componentIndex)
+//       .then((updatedComponents) => {})
+//       .catch((err) => {});
+//   };
+
+//   return {
+//     deleting,
+//     handleDeleteFormComponent,
+//   };
+// };

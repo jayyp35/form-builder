@@ -1,4 +1,7 @@
-import { FormBuilderData } from "../types/formbuider_types";
+import {
+  FormBuilderComponent,
+  FormBuilderData,
+} from "../types/formbuider_types";
 
 export function saveFormData(
   newFormDataToSave: FormBuilderData
@@ -23,7 +26,6 @@ export function saveFormData(
         let existingFormIndex = savedForms.findIndex(
           (form: FormBuilderData) => form.id === newFormDataToSave.id
         );
-        console.log("existingFormIndex", existingFormIndex);
         if (existingFormIndex > -1) {
           savedForms[existingFormIndex] = updatedFormData;
         } else {
@@ -66,6 +68,43 @@ export function fetchFormDataById(id: string): Promise<FormBuilderData | null> {
       const formData =
         savedForms.find((form: FormBuilderData) => form.id === id) || null;
       resolve(formData);
+    }, delay);
+  });
+}
+
+export function deleteFormComponentByIndex(
+  formId: string,
+  componentIndex: number
+): Promise<FormBuilderComponent[] | null> {
+  return new Promise((resolve, reject) => {
+    const delay = Math.floor(Math.random() * 2000) + 1000;
+    setTimeout(() => {
+      if (Math.random() < 0.3) {
+        reject(new Error("Failed to delete form component. Please try again."));
+        return;
+      }
+
+      const savedForms = JSON.parse(localStorage.getItem("savedForms") || "[]");
+      const formIndex = savedForms.findIndex(
+        (form: FormBuilderData) => form.id === formId
+      );
+
+      if (formIndex > -1) {
+        const formData: FormBuilderData = savedForms[formIndex];
+        if (
+          componentIndex >= 0 &&
+          componentIndex < formData.components.length
+        ) {
+          formData.components.splice(componentIndex, 1);
+          savedForms[formIndex] = formData;
+          localStorage.setItem("savedForms", JSON.stringify(savedForms));
+          resolve(formData.components || []);
+        } else {
+          reject(new Error("Invalid component index."));
+        }
+      } else {
+        reject(new Error("Form not found."));
+      }
     }, delay);
   });
 }

@@ -24,7 +24,7 @@ function FormBuilderBody_Right({
       <div className={styles.Status}>
         {savingState === SAVE_STATES.SAVING ? (
           <Loader width="20px" />
-        ) : savingState === SAVE_STATES.ERROR ? (
+        ) : savingState === SAVE_STATES.ERROR || errorsExist ? (
           <></>
         ) : (
           <img src={green_tick} alt="status" height={"20px"} />

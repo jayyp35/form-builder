@@ -25,6 +25,9 @@ function FormBuilder() {
     changeFormMetadata,
     changeFormValue,
     changeAdditionalProperties,
+
+    deletingIndex,
+    handleDeleteFormComponent,
   } = useFormBuilder();
 
   const errorsExist = !!Object.keys(errors).length; //Errors exist of errors object has any key value pair.
@@ -72,6 +75,9 @@ function FormBuilder() {
                       ? errorsExist
                       : false
                   }
+                  formId={formBuilderData.id as string}
+                  deletingIndex={deletingIndex as number}
+                  handleDeleteFormComponent={handleDeleteFormComponent}
                 />
               ) : (
                 <FormBuilderBody

@@ -1,9 +1,4 @@
-import clsx from "clsx";
-import { SAVE_STATES } from "../../formBuilder_hooks";
-import { chevron_down, green_tick } from "../../../../assets/assets";
-
 import Input, { INPUT_TYPES } from "../../../../common/_custom/Input/Input";
-import Loader from "../../../../common/_custom/Loader/Loader";
 import Dropdown from "../../../../common/_custom/Dropdown/Dropdown";
 import Checkbox from "../../../../common/_custom/Checkbox/Checkbox";
 import Datepick from "../../../../common/_custom/Datepick/Datepick";

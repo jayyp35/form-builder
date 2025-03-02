@@ -7,6 +7,9 @@ interface CollapsedFormBodyProps {
   errorsExist: boolean;
   formBuilderComponent: FormBuilderComponent;
   setExpandIndex: Function;
+  formId: string;
+  deletingIndex: number;
+  handleDeleteFormComponent: (formId: string, componentIndex: number) => void;
 }
 
 function CollapsedFormBody({
@@ -14,6 +17,9 @@ function CollapsedFormBody({
   errorsExist,
   setExpandIndex,
   formBuilderComponent,
+  formId,
+  deletingIndex,
+  handleDeleteFormComponent,
 }: CollapsedFormBodyProps) {
   return (
     <div className={styles.CollapsedFormBody}>
@@ -27,6 +33,9 @@ function CollapsedFormBody({
           index={index}
           errorsExist={errorsExist}
           setExpandIndex={setExpandIndex}
+          formId={formId}
+          deletingIndex={deletingIndex}
+          handleDeleteFormComponent={handleDeleteFormComponent}
         />
       </div>
     </div>
