@@ -1,8 +1,13 @@
 import { FormBuilderComponent } from "../types/formbuider_types";
 
+interface ValidationResult {
+  isValid: boolean;
+  errorsObject: { [key: string]: string };
+}
+
 export const validateNewFormComponent = (
   formBuilderData: FormBuilderComponent
-) => {
+): ValidationResult => {
   let errors: any = {};
 
   if (!formBuilderData.title) {

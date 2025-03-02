@@ -2,6 +2,7 @@ import styles from "./Dropdown.module.scss";
 import chevronDown from "../../../assets/chevron-down.svg";
 import clsx from "clsx";
 
+//**Custom Dropdown Component
 interface DropdownProps {
   options: string[];
   value: string;
@@ -11,11 +12,11 @@ interface DropdownProps {
 }
 
 function Dropdown({
-  options,
-  value = "",
+  options, //Options to show in dropdown
+  value = "", //selected option value
   onChange,
-  placeholder,
-  errorMessage = "",
+  placeholder, //Placeholder Text to show
+  errorMessage = "", //Error message from form validations
 }: DropdownProps) {
   return (
     <div className={styles.DropdownContainer}>

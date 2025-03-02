@@ -1,0 +1,16 @@
+.RightSection {
+  display: flex;
+  align-items: center;
+
+  //   .Status {
+  //   }
+
+  .DeleteIcon {
+    padding: 0 20px;
+
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormBuilderComponent,
   FormBuilderData,
@@ -15,20 +15,21 @@ export const SAVE_STATES = {
 };
 
 export const useFormBuilder = () => {
-  const [savingState, setSavingData] = useState<string>("");
+  const [savingState, setSavingData] = useState<string>(""); //To show saving state loaders
   const [formBuilderData, setFormBuilderData] = useState<FormBuilderData>({
     id: getFormId(),
     metadata: {
       name: "",
     },
     components: [],
-  });
-  const [expandIndex, setExpandIndex] = useState<number | null>(null);
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  }); // Initialised From Builder Date
+  const [expandIndex, setExpandIndex] = useState<number | null>(null); //Index of Form component currently expanded
+  const [errors, setErrors] = useState<{ [key: string]: string }>({}); //Errors object
 
-  const formBuilderDataDebounced = useDebouncedValue(formBuilderData);
+  const formBuilderDataDebounced = useDebouncedValue(formBuilderData); //Debounced Form Builder State Data to save to DB
 
   useEffect(() => {
+    //* Whenever debounced form data is updated, save function is triggered.
     formBuilderDataDebounced.components.length &&
       saveData(formBuilderDataDebounced);
   }, [formBuilderDataDebounced]);
@@ -117,25 +118,6 @@ export const useFormBuilder = () => {
     }));
   };
 
-  const validateFormValue = (
-    index: number,
-    keyName: string,
-    value: string | boolean
-  ) => {
-    let error = "";
-    if (keyName === "title" && !value) {
-      error = "Title is required";
-    }
-    if (keyName === "type" && !value) {
-      error = "Type is required";
-    }
-
-    setErrors((existingErrors) => ({
-      ...existingErrors,
-      [keyName]: error,
-    }));
-  };
-
   return {
     savingState,
     formBuilderData,
@@ -146,6 +128,5 @@ export const useFormBuilder = () => {
     changeFormMetadata,
     changeFormValue,
     changeAdditionalProperties,
-    validateFormValue,
   };
 };

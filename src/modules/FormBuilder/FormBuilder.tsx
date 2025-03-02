@@ -1,27 +1,32 @@
-import Input from "../../common/_custom/Input/Input";
-import styles from "./FormBuilder.module.scss";
+import { useNavigate } from "react-router-dom";
 import { FormBuilderComponent } from "../../types/formbuider_types";
-import Button from "../../common/_custom/Button/Button";
 import { SAVE_STATES, useFormBuilder } from "./formBuilder_hooks";
+
+import Input from "../../common/_custom/Input/Input";
+import Button, { BUTTON_TYPES } from "../../common/_custom/Button/Button";
 import FormBuilderBody from "./components/FormBuilderBody/FormBuilderBody";
 import CollapsedFormBody from "./components/CollapsedFormBody/CollapsedFormBody";
-import { useNavigate } from "react-router-dom";
+import styles from "./FormBuilder.module.scss";
 
 function FormBuilder() {
   const navigate = useNavigate();
+
   const {
+    //State variables and handlers
     savingState,
     formBuilderData,
     expandIndex,
     setExpandIndex,
     errors,
+
+    //Functions
     initialiseNewQuestion,
     changeFormMetadata,
     changeFormValue,
     changeAdditionalProperties,
   } = useFormBuilder();
 
-  const errorsExist = !!Object.keys(errors).length;
+  const errorsExist = !!Object.keys(errors).length; //Errors exist of errors object has any key value pair.
   const showAddOption =
     !savingState ||
     [SAVE_STATES.SUCCESS, SAVE_STATES.SAVING].includes(savingState);
@@ -29,7 +34,11 @@ function FormBuilder() {
   return (
     <div className={styles.FormBuilder}>
       <div className={styles.Title}>
-        <Button type="secondary" text="Back" onClick={() => navigate(-1)} />
+        <Button
+          type={BUTTON_TYPES.SECONDARY}
+          text="Back"
+          onClick={() => navigate(-1)}
+        />
         Create a new form
       </div>
       <div>
@@ -48,6 +57,7 @@ function FormBuilder() {
                   index={i}
                   setExpandIndex={setExpandIndex}
                   formBuilderComponent={formBuilderComponent}
+                  errorsExist={errorsExist}
                 />
               ) : (
                 <FormBuilderBody
@@ -74,7 +84,6 @@ function FormBuilder() {
             text="Add Question"
             onClick={initialiseNewQuestion}
             disabled={savingState === SAVE_STATES.SAVING}
-            // disabled={true}
           />
         </div>
       )}

@@ -1,5 +1,6 @@
 import styles from "./Checkbox.module.scss";
 
+//**Custom Button Component
 interface CheckboxProps {
   label: string;
   checked: boolean;

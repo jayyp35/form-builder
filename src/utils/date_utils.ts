@@ -9,3 +9,5 @@ export const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
+
+export const YMDdateFormat = "YYYY-MM-DD";
