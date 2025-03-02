@@ -12,8 +12,8 @@ export interface FormBuilderComponent {
   helperText: string;
 
   numberType?: string;
-  numberMin?: string;
-  numberMax?: string;
+  // numberMin?: string;
+  // numberMax?: string;
 
   additionalProperties?: AdditionalProperties;
 

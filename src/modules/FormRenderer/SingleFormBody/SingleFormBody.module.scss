@@ -25,19 +25,6 @@
         }
       }
     }
-
-    .Footer {
-      margin-top: 20px;
-
-      .ValidityText {
-        margin-top: 5px;
-        font-size: 14px;
-
-        display: flex;
-        align-items: center;
-        column-gap: 5px;
-      }
-    }
   }
 
   .FormBodyContainer :global {
@@ -47,12 +34,4 @@
 
 .SingleFormBody :global {
   animation: fadeIn 400ms ease-in-out;
-}
-
-.Loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
 }

@@ -1,0 +1,4 @@
+export const FORM_VALIDITIY_STATES = {
+  VALID: "VALID",
+  INVALID: "INVALID",
+};

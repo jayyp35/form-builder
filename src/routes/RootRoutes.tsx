@@ -3,7 +3,7 @@ import InvalidRoute from "./404";
 import AppHome from "./AppHome";
 import FormBuilder from "../modules/FormBuilder/FormBuilder";
 import FormRenderer from "../modules/FormRenderer/FormRenderer";
-import SingleFormBody from "../modules/FormRenderer/components/SingleFormBody/SingleFormBody";
+import SingleFormBody from "../modules/FormRenderer/SingleFormBody/SingleFormBody";
 
 function RootRoutes() {
   return (

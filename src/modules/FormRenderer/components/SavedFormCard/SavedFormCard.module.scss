@@ -1,0 +1,21 @@
+.SavedFormCard {
+  background-color: white;
+  border-radius: 4px;
+  padding: 16px;
+  font-size: 14px;
+  cursor: pointer;
+
+  .Top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .FieldsCount {
+      color: #999;
+    }
+  }
+  .LastUpdated {
+    margin-top: 10px;
+    font-size: 10px;
+    color: #999;
+  }
+}
