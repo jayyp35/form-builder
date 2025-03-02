@@ -78,12 +78,27 @@ any) {
     </>
   );
 
+  const AdditionalInfoSelect = () => (
+    <>
+      <Input
+        label="Options (comma separated)"
+        value={formBuilderComponent?.additionalProperties?.options || ""}
+        onChange={(value) =>
+          changeAdditionalProperties(ADDITIONAL_DATA.Options, value)
+        }
+      />
+    </>
+  );
+
   const renderAdditionInfoContent = () => {
     switch (formBuilderComponent.type) {
       case QUESTION_TYPES.Number:
         return <>{AdditionlInfoNumber()}</>;
       case QUESTION_TYPES.Date:
         return <>{AdditionalInfoDate()}</>;
+      case QUESTION_TYPES.SingleSelect:
+      case QUESTION_TYPES.MultiSelect:
+        return <>{AdditionalInfoSelect()}</>;
     }
   };
   return (

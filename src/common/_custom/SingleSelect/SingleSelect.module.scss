@@ -1,0 +1,47 @@
+.RadioGroup {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+
+  .RadioLabel {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+
+    input {
+      margin: 0;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border: 2px solid rgb(88, 88, 88);
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      background-color: white;
+
+      &:checked {
+        background-color: var(--primary-color);
+      }
+
+      &:checked::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background-color: white;
+        background-color: var(--primary-color);
+        border-radius: 80%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .ErrorMessage {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}

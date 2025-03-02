@@ -1,5 +1,6 @@
 .CheckboxContainer {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
   padding-left: 25px;
   cursor: pointer;
@@ -9,6 +10,7 @@
   font-size: 12px;
 
   input {
+    padding: 0;
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -30,8 +32,8 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    height: 18px;
-    width: 18px;
+    height: 15px;
+    width: 15px;
     background-color: #eee;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -40,10 +42,10 @@
       content: "";
       position: absolute;
       display: none;
-      left: 5px;
-      top: 2.5px;
-      width: 3px;
-      height: 7px;
+      left: 4.5px;
+      top: 2px;
+      width: 2px;
+      height: 5px;
       border: solid white;
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);

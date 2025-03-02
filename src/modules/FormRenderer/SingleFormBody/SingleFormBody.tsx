@@ -9,6 +9,8 @@ import TextArea from "../../../common/_custom/Paragraph/TextArea";
 import SingleFormBody_Loader from "./components/SingleFormBody_Loader/SingleFormBody_Loader";
 import SingleFormBody_Footer from "./components/SingleFormBody_Footer/SingleFormBody_Footer";
 import styles from "./SingleFormBody.module.scss";
+import SingleSelect from "../../../common/_custom/SingleSelect/SingleSelect";
+import MultiSelect from "../../../common/_custom/MultiSelect/MultiSelect";
 
 function SingleFormBody() {
   const { isLoading, formConfig, setFormConfig } = useFetchSingleForm();
@@ -78,6 +80,45 @@ function SingleFormBody() {
             errorMessage={component.errorMessage}
             minDate={component?.additionalProperties?.dateMin || ""}
             maxDate={component?.additionalProperties?.dateMax || ""}
+          />
+        );
+      case "Single Select":
+        return (
+          <SingleSelect
+            options={component.additionalProperties?.options || ""}
+            value={component.value as string}
+            errorMessage={component.errorMessage as string}
+            onChange={(val: string) => handleInputChange(index, val)}
+          />
+          // <div key={index} className={styles.RadioGroup}>
+          //   {(component.additionalProperties?.options || "")
+          //     .split(",")
+          //     .map((option, idx) => (
+          //       <label key={idx} className={styles.RadioLabel}>
+          //         <input
+          //           type="radio"
+          //           name={`single-select-${index}`}
+          //           value={option}
+          //           checked={component.value === option}
+          //           onChange={(e) => handleInputChange(index, e.target.value)}
+          //         />
+          //         {option}
+          //       </label>
+          //     ))}
+          //   {component.errorMessage && (
+          //     <div className={styles.ErrorMessage}>
+          //       {component.errorMessage}
+          //     </div>
+          //   )}
+          // </div>
+        );
+      case "Multi Select":
+        return (
+          <MultiSelect
+            options={component.additionalProperties?.options || ""}
+            value={component.value as string}
+            errorMessage={component.errorMessage as string}
+            onChange={(val: string) => handleInputChange(index, val)}
           />
         );
       default:

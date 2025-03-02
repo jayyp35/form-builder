@@ -16,6 +16,7 @@ export const ADDITIONAL_DATA = {
   NumberMax: "numberMax",
   DateMin: "dateMin",
   DateMax: "dateMax",
+  Options: "options",
 };
 export const QUESTION_TYPES = {
   Text: "Text",

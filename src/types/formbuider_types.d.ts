@@ -30,4 +30,5 @@ export type AdditionalProperties = {
   dateMax?: string;
 
   allowNegative?: boolean;
+  options?: string;
 };
