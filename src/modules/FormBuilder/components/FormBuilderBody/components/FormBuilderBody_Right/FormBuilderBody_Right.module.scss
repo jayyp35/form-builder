@@ -1,0 +1,12 @@
+.RightSection {
+  display: flex;
+  align-items: flex-start;
+
+  .Status {
+    padding: 0 20px;
+  }
+
+  .DownIcon {
+    cursor: pointer;
+  }
+}

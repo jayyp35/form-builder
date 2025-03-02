@@ -14,11 +14,12 @@
   .FormBody {
     background-color: white;
     border-radius: 4px;
-    padding: 24px 16px;
+    padding: 20px 14px;
     margin-bottom: 16px;
     border: 2px solid transparent;
   }
   .Collapsed {
+    padding: 16px 14px;
     cursor: pointer;
     &:hover {
       background-color: rgb(243, 243, 243);

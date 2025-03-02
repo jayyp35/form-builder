@@ -18,6 +18,7 @@ import {
 } from "../../../../constants/formBuilder_constants";
 import { YMDdateFormat } from "../../../../utils/date_utils";
 import styles from "./FormBuilderBody.module.scss";
+import FormBuilderBody_Right from "./components/FormBuilderBody_Right/FormBuilderBody_Right";
 
 function FormBuilderBody({
   index,
@@ -40,31 +41,13 @@ function FormBuilderBody({
           errorMessage={errors.title || ""}
         />
 
-        <div className={styles.Right}>
-          <div className={styles.Status}>
-            {savingState === SAVE_STATES.SAVING ? (
-              <Loader width="20px" />
-            ) : savingState === SAVE_STATES.ERROR ? (
-              <></>
-            ) : (
-              <img src={green_tick} alt="status" height={"20px"} />
-            )}
-          </div>
-          <img
-            src={chevron_down}
-            className={clsx(styles.DownIcon, {
-              [styles.Rotate]: index === expandIndex,
-            })}
-            alt="down"
-            height={"20px"}
-            style={{
-              transform: index === expandIndex ? "rotate(180deg)" : "",
-            }}
-            onClick={() => {
-              if (!errorsExist) setExpandIndex(null);
-            }}
-          />
-        </div>
+        <FormBuilderBody_Right
+          index={index}
+          expandIndex={expandIndex}
+          errorsExist={errorsExist}
+          savingState={savingState}
+          setExpandIndex={setExpandIndex}
+        />
       </div>
 
       <div className={styles.QuestionTypeRow}>
