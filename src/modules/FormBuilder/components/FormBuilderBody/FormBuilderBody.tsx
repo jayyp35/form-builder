@@ -86,6 +86,7 @@ function FormBuilderBody({
       )}
 
       <AdditionalInfoRow
+        errors={errors}
         formBuilderComponent={formBuilderComponent}
         changeAdditionalProperties={changeAdditionalProperties}
       />

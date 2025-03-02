@@ -22,18 +22,22 @@ function MultiSelect({
 
   return (
     <div className={styles.CheckboxGroup}>
-      {(options || "")?.split(",").map((option, idx) => (
-        <label key={idx} className={styles.CheckboxLabel}>
-          <Checkbox
-            label={option.trim()}
-            checked={value
-              ?.split(",")
-              .map((val) => val.trim())
-              .includes(option)}
-            onChange={(checked) => handleCheckboxChange(option, checked)}
-          />
-        </label>
-      ))}
+      {options?.length ? (
+        (options || "")?.split(",").map((option, idx) => (
+          <label key={idx} className={styles.CheckboxLabel}>
+            <Checkbox
+              label={option.trim()}
+              checked={value
+                ?.split(",")
+                .map((val) => val.trim())
+                .includes(option)}
+              onChange={(checked) => handleCheckboxChange(option, checked)}
+            />
+          </label>
+        ))
+      ) : (
+        <></>
+      )}
       {errorMessage && (
         <div className={styles.ErrorMessage}>{errorMessage}</div>
       )}

@@ -1,3 +1,4 @@
+import { QUESTION_TYPES } from "../constants/formBuilder_constants";
 import { FormBuilderComponent } from "../types/formbuider_types";
 
 interface ValidationResult {
@@ -15,6 +16,15 @@ export const validateNewFormComponent = (
   }
   if (!formBuilderData?.type) {
     errors.type = "Type is required";
+  }
+
+  if (
+    [QUESTION_TYPES.SingleSelect, QUESTION_TYPES.MultiSelect].includes(
+      formBuilderData?.type
+    ) &&
+    !formBuilderData.additionalProperties?.options?.length
+  ) {
+    errors.select = "No options added";
   }
 
   return {

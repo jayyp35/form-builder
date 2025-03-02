@@ -15,18 +15,22 @@ function SingleSelect({
   return (
     <>
       <div className={styles.RadioGroup}>
-        {(options || "").split(",").map((option, idx) => (
-          <label key={idx} className={styles.RadioLabel}>
-            <Checkbox
-              label={option.trim()}
-              checked={value === option}
-              onChange={() => onChange(option)}
-              // type="radio"
-              // name={`single-select`}
-            />
-            {/* {option?.trim?.()} */}
-          </label>
-        ))}
+        {options?.length ? (
+          (options || "").split(",").map((option, idx) => (
+            <label key={idx} className={styles.RadioLabel}>
+              <Checkbox
+                label={option.trim()}
+                checked={value === option}
+                onChange={() => onChange(option)}
+                // type="radio"
+                // name={`single-select`}
+              />
+              {/* {option?.trim?.()} */}
+            </label>
+          ))
+        ) : (
+          <></>
+        )}
       </div>
       {errorMessage && (
         <div className={styles.ErrorMessage}>{errorMessage}</div>

@@ -11,8 +11,10 @@ import {
 } from "../../../../../../constants/formBuilder_constants";
 import { YMDdateFormat } from "../../../../../../utils/date_utils";
 import styles from "./AdditionalInfoRow.module.scss";
+import AdditionalInfoSelect from "./components/AdditionalInfoSelect/AdditionalInfoSelect";
 
 function AdditionalInfoRow({
+  errors,
   formBuilderComponent,
   changeAdditionalProperties,
 }: //   type,
@@ -78,18 +80,6 @@ any) {
     </>
   );
 
-  const AdditionalInfoSelect = () => (
-    <>
-      <Input
-        label="Options (comma separated)"
-        value={formBuilderComponent?.additionalProperties?.options || ""}
-        onChange={(value) =>
-          changeAdditionalProperties(ADDITIONAL_DATA.Options, value)
-        }
-      />
-    </>
-  );
-
   const renderAdditionInfoContent = () => {
     switch (formBuilderComponent.type) {
       case QUESTION_TYPES.Number:
@@ -98,7 +88,15 @@ any) {
         return <>{AdditionalInfoDate()}</>;
       case QUESTION_TYPES.SingleSelect:
       case QUESTION_TYPES.MultiSelect:
-        return <>{AdditionalInfoSelect()}</>;
+        return (
+          <AdditionalInfoSelect
+            errors={errors}
+            value={formBuilderComponent?.additionalProperties?.options || ""}
+            onChange={(value) =>
+              changeAdditionalProperties(ADDITIONAL_DATA.Options, value)
+            }
+          />
+        );
     }
   };
   return (
