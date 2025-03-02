@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../common/_custom/Loader/Loader";
 import { formatDate } from "../../utils/date_utils";
 import { useFetchAllForms } from "./formRenderer_hooks";
+import Button from "../../common/_custom/Button/Button";
 
 export default function FormRenderer() {
   const navigate = useNavigate();
@@ -19,7 +20,10 @@ export default function FormRenderer() {
 
   return (
     <div className={styles.FormRenderer}>
-      <div className={styles.Title}>View Forms</div>
+      <div className={styles.Title}>
+        <Button type="secondary" text="Back" onClick={() => navigate(-1)} />
+        View Forms
+      </div>
 
       {isLoading ? (
         <LoadingComponent />

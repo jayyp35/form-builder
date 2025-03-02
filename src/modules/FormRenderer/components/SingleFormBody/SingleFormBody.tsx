@@ -10,6 +10,14 @@ import Input from "../../../../common/_custom/Input/Input";
 import Loader from "../../../../common/_custom/Loader/Loader";
 import Button from "../../../../common/_custom/Button/Button";
 import Datepick from "../../../../common/_custom/Datepick/Datepick";
+import TextArea from "../../../../common/_custom/Paragraph/TextArea";
+import greentick from "../../../../assets/green-tick.svg";
+import erroricon from "../../../../assets/error.svg";
+
+const FORM_VALIDITIY_STATES = {
+  VALID: "VALID",
+  INVALID: "INVALID",
+};
 
 function SingleFormBody() {
   const params = useParams();
@@ -17,7 +25,7 @@ function SingleFormBody() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [formConfig, setFormConfig] = useState<FormBuilderData | null>(null);
-  const [errorsExist, setErrorsExist] = useState(false);
+  const [isValid, setAllValid] = useState("");
 
   console.log("formConfig", formConfig);
 
@@ -52,9 +60,11 @@ function SingleFormBody() {
     // "Number",
     // "Phone Number",
     let components = structuredClone(formConfig?.components || []);
+    let isValid = true;
     components = components.map((singleFormComponent: FormBuilderComponent) => {
       const value = singleFormComponent.value;
       const type = singleFormComponent.type;
+      if (type === "Phone Number") console.log(String(value)?.length !== 10);
 
       const minValue = Number(
         singleFormComponent?.additionalProperties?.numberMin
@@ -63,8 +73,6 @@ function SingleFormBody() {
         singleFormComponent?.additionalProperties?.numberMax
       );
 
-      console.log("check", Number(value), type, minValue, maxValue);
-      console.log(singleFormComponent);
       let errorMessage;
 
       if (singleFormComponent.value) {
@@ -76,7 +84,7 @@ function SingleFormBody() {
             (maxValue ? maxValue && Number(value) > maxValue : false))
         ) {
           errorMessage = `Value must be between ${minValue}-${maxValue}`;
-        } else if (type === "Phone Number" && (value as string)?.length < 10) {
+        } else if (type === "Phone Number" && String(value)?.length !== 10) {
           errorMessage = "Phone Number must be 10 digits long";
         } else {
           delete singleFormComponent.errorMessage;
@@ -86,6 +94,8 @@ function SingleFormBody() {
           errorMessage = "This field is required";
         else delete singleFormComponent.errorMessage;
       }
+
+      if (errorMessage && isValid) isValid = false;
 
       return {
         ...singleFormComponent,
@@ -99,6 +109,9 @@ function SingleFormBody() {
             components: components,
           }
         : formConfig
+    );
+    setAllValid(
+      isValid ? FORM_VALIDITIY_STATES.VALID : FORM_VALIDITIY_STATES.INVALID
     );
     // setFormConfig((formConfig) => )
   };
@@ -124,7 +137,6 @@ function SingleFormBody() {
   ) => {
     switch (component.type) {
       case "Text":
-      case "Description":
       case "Email":
         return (
           <Input
@@ -144,6 +156,16 @@ function SingleFormBody() {
             value={component.value || ""}
             onChange={(value) => handleInputChange(index, value)}
             type="number"
+            errorMessage={component.errorMessage}
+          />
+        );
+      case "Description":
+        return (
+          <TextArea
+            key={index}
+            placeholder={component.helperText}
+            value={component.value || ""}
+            onChange={(value) => handleInputChange(index, value)}
             errorMessage={component.errorMessage}
           />
         );
@@ -199,6 +221,20 @@ function SingleFormBody() {
                 validateForm();
               }}
             />
+            {isValid === FORM_VALIDITIY_STATES.VALID ? (
+              <div className={styles.ValidityText}>
+                <img src={greentick} alt="greentick" height={"18px"} />
+                All inputs are valid
+              </div>
+            ) : isValid === FORM_VALIDITIY_STATES.INVALID ? (
+              <div className={styles.ValidityText}>
+                <img src={erroricon} alt="errorIcon" height={"18px"} />
+                There are some errors in the form. Please rectify before
+                proceeding.
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       )}

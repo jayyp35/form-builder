@@ -1,9 +1,9 @@
-.InputContainer {
+.TextContainer {
   position: relative;
   //   margin: 26px 0 0 0;
   width: 100%;
-  .Input {
-    height: 40px;
+  .TextInput {
+    height: 80px;
     width: 100%;
     padding: 10px;
     display: block;
@@ -12,6 +12,7 @@
     background: white;
     font-size: 12px;
     color: black;
+    resize: none;
     &:focus {
       outline: none;
       border-color: #5264ae;

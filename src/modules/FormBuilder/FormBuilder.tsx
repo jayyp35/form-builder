@@ -5,8 +5,10 @@ import Button from "../../common/_custom/Button/Button";
 import { SAVE_STATES, useFormBuilder } from "./formBuilder_hooks";
 import FormBuilderBody from "./components/FormBuilderBody/FormBuilderBody";
 import CollapsedFormBody from "./components/CollapsedFormBody/CollapsedFormBody";
+import { useNavigate } from "react-router-dom";
 
 function FormBuilder() {
+  const navigate = useNavigate();
   const {
     savingState,
     formBuilderData,
@@ -27,14 +29,16 @@ function FormBuilder() {
   return (
     <div className={styles.FormBuilder}>
       <div className={styles.Title}>
+        <Button type="secondary" text="Back" onClick={() => navigate(-1)} />
         Create a new form
+      </div>
+      <div>
         <Input
           placeholder="Form Name"
           value={formBuilderData.metadata.name}
           onChange={(value) => changeFormMetadata("name", value)}
+          style={{ marginBottom: "20px" }}
         />
-      </div>
-      <div>
         {formBuilderData.components.map(
           (formBuilderComponent: FormBuilderComponent, i: number) => (
             <div className={styles.FormBody} key={i}>

@@ -3,36 +3,43 @@ import clsx from "clsx";
 import calendar from "../../../assets/calendar.svg";
 import { useRef } from "react";
 
+//**Custom Datepick Component
 interface DatepickProps {
   placeholder?: string;
   label?: string;
   value: string;
-  onChange: (val: string) => void;
   errorMessage?: string;
   disabled?: boolean;
   minDate?: string;
   maxDate?: string;
+
+  onChange: (val: string) => void;
 }
 
 function Datepick({
-  placeholder = "",
-  label = "",
+  placeholder = "", //*Placeholder text
+  label = "", //*Datepick Label
   value,
   onChange,
-  errorMessage = "",
-  disabled = false,
-  minDate = "",
-  maxDate = "",
+  errorMessage = "", //Error message to show for invalid inputs
+  disabled = false, //Disabled state
+  minDate = "", //Minimum Date value allowed
+  maxDate = "", //Maximum Date value allowed
 }: DatepickProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+
   const handleIconClick = () => {
+    //*Function to show calendar picker on click of the complete component.
     if (inputRef.current) {
       inputRef.current.focus();
-      inputRef.current.showPicker(); // For browsers that support showPicker()
+      (
+        inputRef.current as HTMLInputElement & { showPicker?: () => void }
+      ).showPicker?.(); // For browsers that support showPicker()
     }
   };
+
   return (
-    <div className={styles.DatepickContainer}>
+    <div className={styles.DatepickContainer} onClick={handleIconClick}>
       <input
         ref={inputRef}
         className={clsx(styles.Datepick, {
@@ -55,7 +62,6 @@ function Datepick({
         src={calendar}
         alt="calendar"
         height={"18px"}
-        onClick={handleIconClick}
       />
     </div>
   );

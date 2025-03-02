@@ -1,23 +1,25 @@
 import styles from "./Button.module.scss";
 import clsx from "clsx";
 
-const BUTTON_TYPES = {
+export const BUTTON_TYPES = {
   PRIMARY: "primary",
   SECONDARY: "secondary",
 };
 
+//**Custom Button Component
 interface ButtonProps {
   text: string;
   type?: (typeof BUTTON_TYPES)[keyof typeof BUTTON_TYPES];
-  onClick?: () => void;
   disabled?: boolean;
+
+  onClick?: () => void;
 }
 
 function Button({
-  text,
-  type = BUTTON_TYPES.PRIMARY,
-  onClick = () => {},
-  disabled = false,
+  text, //* Used to show text on the button
+  type = BUTTON_TYPES.PRIMARY, //Themed primary or secondary
+  onClick = () => {}, //Click handler
+  disabled = false, //Disable button functionality
 }: ButtonProps) {
   return (
     <button

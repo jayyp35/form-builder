@@ -25,6 +25,13 @@
   --flex-gap: 10px;
 }
 
+textarea::placeholder {
+  font-family: inherit; /* Ensures it matches the text */
+  color: gray; /* Customize color */
+  font-style: normal; /* Avoids italic in some browsers */
+  font-family: Arial, sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }

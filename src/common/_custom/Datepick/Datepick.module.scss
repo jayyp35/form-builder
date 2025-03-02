@@ -1,8 +1,10 @@
 .DatepickContainer {
   position: relative;
   width: 100%;
+  cursor: pointer;
 
   .Datepick {
+    cursor: pointer;
     height: 40px;
     width: 100%;
     padding: 10px;
