@@ -4,6 +4,7 @@ import Checkbox from "../../../../common/_custom/Checkbox/Checkbox";
 
 import {
   FORM_BUILDER_FIEDS,
+  QUESTION_TYPES,
   questionTypesDropdownOptions,
 } from "../../../../constants/formBuilder_constants";
 import styles from "./FormBuilderBody.module.scss";
@@ -72,11 +73,17 @@ function FormBuilderBody({
           changeFormValue(FORM_BUILDER_FIEDS.helperText, value)
         }
       />
-      <Input
-        label="Default Value"
-        value={formBuilderComponent.value}
-        onChange={(value) => changeFormValue(FORM_BUILDER_FIEDS.value, value)}
-      />
+      {![
+        QUESTION_TYPES.Date,
+        QUESTION_TYPES.SingleSelect,
+        QUESTION_TYPES.MultiSelect,
+      ].includes(formBuilderComponent.type) && (
+        <Input
+          label="Default Value"
+          value={formBuilderComponent.value}
+          onChange={(value) => changeFormValue(FORM_BUILDER_FIEDS.value, value)}
+        />
+      )}
 
       <AdditionalInfoRow
         formBuilderComponent={formBuilderComponent}
