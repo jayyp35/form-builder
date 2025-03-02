@@ -67,7 +67,15 @@ export const validateFormOnSubmission = (
           break;
       }
     } else {
-      if (isRequired) errorMessage = "This field is required";
+      if (isRequired) {
+        if (
+          [QUESTION_TYPES.SingleSelect, QUESTION_TYPES.MultiSelect].includes(
+            type
+          )
+        ) {
+          errorMessage = "Please select atleast one option";
+        } else errorMessage = "This field is required";
+      }
     }
     if (!errorMessage) delete singleFormComponent.errorMessage;
     if (errorMessage && isValid) isValid = false;
@@ -82,16 +90,4 @@ export const validateFormOnSubmission = (
     updatedFormComponents: components,
     isValid: isValid,
   };
-  //   setFormConfig((formConfig) =>
-  //     formConfig
-  //       ? {
-  //           ...formConfig,
-  //           components: components,
-  //         }
-  //       : formConfig
-  //   );
-  //   setAllValid(
-  //     isValid ? FORM_VALIDITIY_STATES.VALID : FORM_VALIDITIY_STATES.INVALID
-  //   );
-  // setFormConfig((formConfig) => )
 };

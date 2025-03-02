@@ -14,10 +14,8 @@ import MultiSelect from "../../../common/_custom/MultiSelect/MultiSelect";
 
 function SingleFormBody() {
   const { isLoading, formConfig, setFormConfig } = useFetchSingleForm();
-  const { isValid, onValidateFormClick } = useSingleFormValidityCheck(
-    formConfig,
-    setFormConfig
-  );
+  const { validating, isValid, onValidateFormClick } =
+    useSingleFormValidityCheck(formConfig, setFormConfig);
 
   const handleInputChange = (index: number, value: string | number) => {
     setFormConfig((prevConfig) => {
@@ -153,6 +151,7 @@ function SingleFormBody() {
 
           {!!formConfig && (
             <SingleFormBody_Footer
+              validating={validating}
               isValid={isValid}
               onValidateFormClick={onValidateFormClick}
             />

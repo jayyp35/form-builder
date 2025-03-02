@@ -4,6 +4,7 @@ import { fetchAllSavedForms, fetchFormDataById } from "../../service/service";
 import { useParams } from "react-router-dom";
 import { validateFormOnSubmission } from "../../utils/formrenderer_validations";
 import { FORM_VALIDITIY_STATES } from "../../constants/formRenderer_constants";
+import { toast } from "react-toastify";
 
 export const useFetchAllForms = () => {
   //** Custom hook to handle logic of fetching all forms */
@@ -61,24 +62,34 @@ export const useSingleFormValidityCheck = (
   setFormConfig: Function
 ) => {
   //** Custom hook to handle logic of validity checks of a  single form data */
+  const [validating, setValidating] = useState(false);
   const [isValid, setAllValid] = useState("");
-  const onValidateFormClick = () => {
-    if (!formConfig) return;
-    const { isValid, updatedFormComponents } =
-      validateFormOnSubmission(formConfig);
 
-    setFormConfig((formConfig: FormBuilderData) =>
-      formConfig
-        ? {
-            ...formConfig,
-            components: updatedFormComponents,
-          }
-        : formConfig
-    );
-    setAllValid(
-      isValid ? FORM_VALIDITIY_STATES.VALID : FORM_VALIDITIY_STATES.INVALID
-    );
+  const onValidateFormClick = async () => {
+    if (!formConfig) return;
+    setValidating(true);
+    setTimeout(() => {
+      const { isValid, updatedFormComponents } =
+        validateFormOnSubmission(formConfig);
+
+      setFormConfig((formConfig: FormBuilderData) =>
+        formConfig
+          ? {
+              ...formConfig,
+              components: updatedFormComponents,
+            }
+          : formConfig
+      );
+      setAllValid(
+        isValid ? FORM_VALIDITIY_STATES.VALID : FORM_VALIDITIY_STATES.INVALID
+      );
+
+      if (isValid) toast.success("Validation Successful");
+      else toast.error("Invalid Form Submission");
+
+      setValidating(false);
+    }, 2000);
   };
 
-  return { isValid, onValidateFormClick };
+  return { validating, isValid, onValidateFormClick };
 };

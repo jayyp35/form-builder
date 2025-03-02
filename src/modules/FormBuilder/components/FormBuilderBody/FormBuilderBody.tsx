@@ -1,17 +1,11 @@
-import Input, { INPUT_TYPES } from "../../../../common/_custom/Input/Input";
+import Input from "../../../../common/_custom/Input/Input";
 import Dropdown from "../../../../common/_custom/Dropdown/Dropdown";
 import Checkbox from "../../../../common/_custom/Checkbox/Checkbox";
-import Datepick from "../../../../common/_custom/Datepick/Datepick";
 
 import {
-  ADDITIONAL_DATA,
   FORM_BUILDER_FIEDS,
-  NUMBER_TYPE_SUBTYPES,
-  numberTypeSubtypesDropdownOptions,
-  QUESTION_TYPES,
   questionTypesDropdownOptions,
 } from "../../../../constants/formBuilder_constants";
-import { YMDdateFormat } from "../../../../utils/date_utils";
 import styles from "./FormBuilderBody.module.scss";
 import FormBuilderBody_Right from "./components/FormBuilderBody_Right/FormBuilderBody_Right";
 import AdditionalInfoRow from "./components/AdditionalInfoRow/AdditionalInfoRow";

@@ -5,17 +5,23 @@ import Button from "../../../../../common/_custom/Button/Button";
 import styles from "./SingleFormBody_Footer.module.scss";
 
 interface SingleFormBody_FooterProps {
+  validating: boolean;
   isValid: string;
   onValidateFormClick: () => void;
 }
 
 function SingleFormBody_Footer({
+  validating,
   isValid,
   onValidateFormClick,
 }: SingleFormBody_FooterProps) {
   return (
     <div className={styles.SingleFormBody_Footer}>
-      <Button text="Validate Form" onClick={onValidateFormClick} />
+      <Button
+        text="Validate Form"
+        onClick={onValidateFormClick}
+        loading={validating}
+      />
       {isValid === FORM_VALIDITIY_STATES.VALID ? (
         <div className={styles.ValidityText}>
           <img src={green_tick} alt="greentick" height={"18px"} />
